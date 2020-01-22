@@ -1,0 +1,6 @@
+out
+node_modules
+*.vsix
+.vscode/symbols.json
+npm-debug.log
+.vscode-test/
