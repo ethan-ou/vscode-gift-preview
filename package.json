@@ -214,7 +214,7 @@
 						"off",
 						"verbose"
 					],
-					"default": "off",
+					"default": "verbose",
 					"description": "%gift.trace.desc%",
 					"scope": "window"
 				}
@@ -236,7 +236,7 @@
 	"dependencies": {
 		"cheerio": "1.0.0-rc.2",
 		"lodash.throttle": "4.1.1",
-		"showdown": "^1.9.1",
+		"marked": "^0.8.0",
 		"vscode-nls": "3.2.4"
 	},
 	"devDependencies": {

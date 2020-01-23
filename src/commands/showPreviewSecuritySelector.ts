@@ -10,7 +10,7 @@ import { isGIFTFile } from '../util/file';
 import { GIFTPreviewManager } from '../features/previewManager';
 
 export class ShowPreviewSecuritySelectorCommand implements Command {
-	public readonly id = 'html.showPreviewSecuritySelector';
+	public readonly id = 'gift.showPreviewSecuritySelector';
 
 	public constructor(
 		private readonly previewSecuritySelector: PreviewSecuritySelector,
