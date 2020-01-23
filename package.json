@@ -118,15 +118,25 @@
 			],
 			"explorer/context": [
 				{
-					"command": "gift.showPreview",
-					"when": "resourceLangId == gift",
+					"command": "gift.showPreviewToSide",
+					"when": "editorLangId == gift",
+					"alt": "gift.showPreview",
+					"group": "navigation"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "gift.showPreviewToSide",
+					"when": "editorLangId == gift",
+					"alt": "gift.showPreview",
 					"group": "navigation"
 				}
 			],
 			"editor/title/context": [
 				{
-					"command": "gift.showPreview",
-					"when": "resourceLangId == gift",
+					"command": "gift.showPreviewToSide",
+					"when": "editorLangId == gift",
+					"alt": "gift.showPreview",
 					"group": "navigation"
 				}
 			],

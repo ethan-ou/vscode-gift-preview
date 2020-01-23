@@ -21,7 +21,7 @@ export interface CodeLineElement {
 }
 
 const getCodeLineElements = (() => {
-	let elements: CodeLineElement[];
+	let elements: any[];
 	return () => {
 		if (!elements) {
 			elements = Array.prototype.map.call(
