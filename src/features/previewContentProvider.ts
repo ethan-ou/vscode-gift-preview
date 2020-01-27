@@ -67,7 +67,6 @@ export class GIFTContentProvider {
 		// Content Security Policy
 		const nonce = new Date().getTime() + '' + new Date().getMilliseconds();
 		const csp = this.getCspForResource(sourceUri, nonce);
-		console.log(parseGift(giftDocument.getText()));
         const parsedDoc = parseGift(giftDocument.getText()).split(/\r?\n/).map((l,i) => 
 			l.replace(this.TAG_RegEx, (
 				match: string, p1: string, p2: string, p3: string, 
