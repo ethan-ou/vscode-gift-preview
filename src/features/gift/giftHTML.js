@@ -5,7 +5,7 @@ export default function giftPreviewHTML(questions) {
 
   let result = ``;
   for (let question of questions) {
-    result += `<div>${sortQuestionType(question)}</div>`;
+    result += `<section class="moodle">${sortQuestionType(question)}</section>`;
   }
   return result;
 }
@@ -29,6 +29,7 @@ function sortQuestionType(q) {
         ${formatFeedback(q.globalFeedback)}
         `;
     case "Numerical":
+      console.log("numerical!", q);
       return `
         ${makeTitle("Numerical", q.title)}
         <p>${formatText(q.stem)}</p>

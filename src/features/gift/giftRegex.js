@@ -1,6 +1,6 @@
 export default function(text) {
     let document = removeBackslash(lineRegex(documentRegex(text))).split(/\r?\n/)
-    return document.map(i => `<p>${i}<p>`).join('');
+    return `<section class="moodle">${document.map(i => `<p>${i}</p>`).join('')}</section>`;
 }
 
 function documentRegex(text) {
