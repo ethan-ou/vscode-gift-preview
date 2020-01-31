@@ -5,7 +5,13 @@ export default function giftPreviewHTML(questions) {
 
   let result = ``;
   for (let question of questions) {
-    result += `<section class="moodle">${sortQuestionType(question)}</section>`;
+    if (question.type === "Category")
+      result += `<div class="category">${sortQuestionType(question)}</div>`;
+    else {
+      result += `<section class="moodle">${sortQuestionType(
+        question
+      )}</section>`;
+    }
   }
   return result;
 }
