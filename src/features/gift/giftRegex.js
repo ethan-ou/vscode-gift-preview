@@ -10,8 +10,8 @@ function documentRegex(text) {
 
     return text
     .replace(newLineAnswer, `\n$2`)
-    .replace(correctAnswer, `$1<li style="color: green">$4</li>`)
-    .replace(incorrectAnswer, `$1<li style="color: red">$4</li>`)
+    .replace(correctAnswer, `$1<li>$4</li>`)
+    .replace(incorrectAnswer, `$1<li>$4</li>`)
 }
 
 function lineRegex(text) {
