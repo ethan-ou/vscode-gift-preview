@@ -28,6 +28,13 @@ function sortQuestionType(q) {
         ${formatAnswers(q.choices)}
         ${formatFeedback(q.globalFeedback)}
         `;
+    case "Numerical":
+      return `
+        ${makeTitle("Numerical", q.title)}
+        <p>${formatText(q.stem)}</p>
+        ${formatNumerical(q.choices)}
+        ${formatFeedback(q.globalFeedback)}
+      `;
     case "Short":
       return `
         ${makeTitle("Short answer", q.title)}
@@ -75,6 +82,40 @@ function formatAnswers(choices) {
     `;
   }
   return `<ul>${result}</ul>`;
+}
+
+function formatNumerical(choices) {
+  function numericalAnswer(choice) {
+    switch (choice.type) {
+      case "simple":
+        return `${choice.number}`;
+      case "range":
+        return `${choice.number} ± ${choice.range}`;
+      case "high-low":
+        return `${choice.numberHigh} - ${choice.numberLow}`;
+      default:
+        return;
+    }
+  }
+
+  if (Array.isArray(choices)) {
+    let result = ``;
+    for (let choice of choices) {
+      result += `
+      <li class="${choice.isCorrect ? "correct" : "wrong"}">
+      <p>${conditionalDisplay(choice.weight, `<em>(${choice.weight}%)</em>`)} 
+      ${numericalAnswer(choice.text)}
+      ${choice.feedback !== null ? ` [${formatText(choice.feedback)}]` : ``}</p>
+      </li>
+      `;
+    }
+    return `<ul>${result}</ul>`;
+  } else {
+    return `
+    <ul>
+      <li><p>${numericalAnswer(choices)}</p></li>
+    </ul>`;
+  }
 }
 
 function formatMatching(matchPairs) {
