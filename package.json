@@ -245,6 +245,8 @@
 	},
 	"dependencies": {
 		"cheerio": "1.0.0-rc.2",
+		"deep-diff": "^1.0.2",
+		"eol": "^0.9.1",
 		"lodash.throttle": "4.1.1",
 		"marked": "^0.8.0",
 		"vscode-nls": "3.2.4"
@@ -252,7 +254,7 @@
 	"devDependencies": {
 		"@studio/changes": "1.7.0",
 		"@types/cheerio": "0.22.9",
-		"@types/lodash.throttle": "4.1.4",
+		"@types/lodash.throttle": "^4.1.4",
 		"@types/mocha": "2.2.42",
 		"@types/node": "10.9.4",
 		"ts-loader": "4.0.1",
