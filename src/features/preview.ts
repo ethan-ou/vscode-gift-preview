@@ -332,7 +332,6 @@ export class GIFTPreview {
 			this.editor.title = GIFTPreview.getPreviewTitle(this._resource, this._locked);
 			this.editor.iconPath = this.iconPath;
 			this.editor.webview.options = GIFTPreview.getWebviewOptions(resource);
-			console.log(this.editor.webview.html, content);
 			this.editor.webview.html = content;
 		}
 	}
