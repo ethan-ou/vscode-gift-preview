@@ -13,7 +13,7 @@ import { Logger } from '../logger';
 import { ContentSecurityPolicyArbiter, GIFTPreviewSecurityLevel } from '../security';
 import { GIFTPreviewConfigurationManager, GIFTPreviewConfiguration } from './previewConfig';
 import * as cheerio from "cheerio";
-import parseGift from './gift';
+import GIFTParser from './gift';
 
 /**
  * Strings used inside the gift preview.
@@ -36,11 +36,15 @@ const previewStrings = {
 };
 
 export class GIFTContentProvider {
+	private GIFTParser: any;
+
 	constructor(
 		private readonly context: vscode.ExtensionContext,
 		private readonly cspArbiter: ContentSecurityPolicyArbiter,
-		private readonly logger: Logger
-	) { }
+		private readonly logger: Logger,
+	) { 
+		this.GIFTParser = new GIFTParser();
+	}
 
 	private readonly TAG_RegEx = /^\s*?\<(p|h[1-6]|img|code|div|blockquote|li)((\s+.*?)(class="(.*?)")(.*?\>)|\>|\>|\/\>|\s+.*?\>)/;
 
@@ -67,27 +71,40 @@ export class GIFTContentProvider {
 		// Content Security Policy
 		const nonce = new Date().getTime() + '' + new Date().getMilliseconds();
 		const csp = this.getCspForResource(sourceUri, nonce);
-        const parsedDoc = parseGift(giftDocument.getText()).split(/\r?\n/).map((l,i) => 
-			l.replace(this.TAG_RegEx, (
-				match: string, p1: string, p2: string, p3: string, 
-				p4: string, p5: string, p6: string, offset: number) => 
-			typeof p5 !== "string" ? 
-			`<${p1} class="code-line" data-line="${i+1}" ${p2}` : 
-			`<${p1} ${p3} class="${p5} code-line" data-line="${i+1}" ${p6}`)
-        ).join("\n");
-        const $ = cheerio.load(parsedDoc);
-		$("head").prepend(`<meta http-equiv="Content-type" content="text/gift;charset=UTF-8">
-				${csp}
-				<meta id="vscode-gift-preview-data"
-					data-settings="${JSON.stringify(initialData).replace(/"/g, '&quot;')}"
-					data-strings="${JSON.stringify(previewStrings).replace(/"/g, '&quot;')}"
-					data-state="${JSON.stringify(state || {}).replace(/"/g, '&quot;')}">
-				<script src="${this.extensionResourcePath('pre.js')}" nonce="${nonce}"></script>
-				<script src="${this.extensionResourcePath('index.js')}" nonce="${nonce}"></script>
-				${this.getStyles(sourceUri, config)}
-				<base href="${giftDocument.uri.with({ scheme: 'vscode-resource' }).toString(true)}">`);
-		$("body").addClass(`vscode-body ${config.markEditorSelection ? 'showEditorSelection' : ''}`);
-		return $.html();
+		
+		this.GIFTParser.updateText(giftDocument.getText());
+
+		const GIFTMarkup = this.GIFTParser.html;
+        // const parsedDoc = GIFTMarkup.split(/\r?\n/).map((l: any, i: any) => 
+		// 	l.replace(this.TAG_RegEx, (
+		// 		match: string, p1: string, p2: string, p3: string, 
+		// 		p4: string, p5: string, p6: string, offset: number) => 
+		// 	typeof p5 !== "string" ? 
+		// 	`<${p1} class="code-line" ${p2}` : 
+		// 	`<${p1} ${p3} class="${p5} code-line" ${p6}`)
+		// ).join("\n");
+
+		const removeBlankParagraphs = /<section[^>]*>[\s]*<p[^>]*><\/p[^>]*>[\s]*<\/section>/g;
+
+		const prependDoc = `
+		<head>
+			<meta http-equiv="Content-type" content="text/html" charset=UTF-8">
+			${csp}
+			<meta id="vscode-gift-preview-data"
+				data-settings="${JSON.stringify(initialData).replace(/"/g, '&quot;')}"
+				data-strings="${JSON.stringify(previewStrings).replace(/"/g, '&quot;')}"
+				data-state="${JSON.stringify(state || {}).replace(/"/g, '&quot;')}">
+			<script src="${this.extensionResourcePath('pre.js')}" nonce="${nonce}"></script>
+			<script src="${this.extensionResourcePath('index.js')}" nonce="${nonce}"></script>
+			${this.getStyles(sourceUri, config)}
+			<link rel="stylesheet" class="code-user-style" href="${this.extensionResourcePath("styles.css")}" type="text/css" media="screen">
+			<base href="${giftDocument.uri.with({ scheme: 'vscode-resource' }).toString(true)}">
+		</head>
+		<body class="vscode-body ${config.markEditorSelection ? 'showEditorSelection' : ''}">
+			${GIFTMarkup}
+		</body>
+		`;
+		return prependDoc;
 	}
 
 	private extensionResourcePath(mediaFile: string): string {
@@ -133,8 +150,10 @@ export class GIFTContentProvider {
 			return config.styles.map(style => {
 				return `<link rel="stylesheet" class="code-user-style" data-source="${style.replace(/"/g, '&quot;')}" href="${this.fixHref(resource, style)}" type="text/css" media="screen">`;
 			}).join('\n');
+		} else {
+			return ``;
 		}
-		return '';
+
 	}
 
 	private getCspForResource(resource: vscode.Uri, nonce: string): string {
