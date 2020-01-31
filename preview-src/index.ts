@@ -42,7 +42,7 @@ const onUpdateView = (() => {
 	const doScroll = throttle((line: number) => {
 		scrollDisabled = true;
 		scrollToRevealSourceLine(line);
-	}, 50);
+	}, 40);
 
 	return (line: number, settings: any) => {
 		if (!isNaN(line)) {
@@ -125,5 +125,5 @@ if (settings.scrollEditorWithPreview) {
 				messaging.postMessage('revealLine', { line });
 			}
 		}
-	}, 50));
+	}, 40));
 }

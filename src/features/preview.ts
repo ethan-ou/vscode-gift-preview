@@ -215,7 +215,7 @@ export class GIFTPreview {
 			if (isResourceChange || this.firstUpdate) {
 				this.doUpdate();
 			} else {
-				this.throttleTimer = setTimeout(() => this.doUpdate(), 300);
+				this.throttleTimer = setTimeout(() => this.doUpdate(), 40);
 			}
 		}
 
@@ -332,6 +332,7 @@ export class GIFTPreview {
 			this.editor.title = GIFTPreview.getPreviewTitle(this._resource, this._locked);
 			this.editor.iconPath = this.iconPath;
 			this.editor.webview.options = GIFTPreview.getWebviewOptions(resource);
+			console.log(this.editor.webview.html, content);
 			this.editor.webview.html = content;
 		}
 	}
