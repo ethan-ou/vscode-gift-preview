@@ -1,6 +1,6 @@
 {
 	"displayName": "GIFT Preview",
-	"description": "Provides ability to preview GIFT documents.",
+	"description": "Live preview for Moodle's GIFT format",
 	"gift.preview.doubleClickToSwitchToEditor.desc": "Double click in the gift preview to switch to the editor.",
 	"gift.preview.markEditorSelection.desc": "Mark the current editor selection in the gift preview.",
 	"gift.preview.scrollEditorWithPreview.desc": "When a gift preview is scrolled, update the view of the editor.",
