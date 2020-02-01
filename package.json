@@ -11,14 +11,14 @@
 		"type": "git",
 		"url": "https://github.com/ethan-ou/vscode-gift-preview"
 	},
-	"galleryBanner": {
-		"color": "#78d6f0",
-		"theme": "light"
-	},
 	"main": "./out/extension.js",
 	"engines": {
 		"vscode": "^1.31.0"
 	},
+	"keywords": [
+        "gift",
+        "moodle"
+    ],
 	"categories": [
 		"Programming Languages"
 	],
