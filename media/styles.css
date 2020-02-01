@@ -24,8 +24,8 @@ body {
   padding: 1rem 1rem;
   margin-bottom: 0.5rem;
   font-size: 1rem;
-  background-color: transparent;
-  border: solid #c7e4e4 4px;
+  background-color: #def2f8;
+  border: solid #c7e4e4 1px;
   border-radius: 6px;
 }
 
