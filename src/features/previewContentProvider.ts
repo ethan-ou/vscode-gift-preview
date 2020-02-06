@@ -13,6 +13,7 @@ import { Logger } from '../logger';
 import { ContentSecurityPolicyArbiter, GIFTPreviewSecurityLevel } from '../security';
 import { GIFTPreviewConfigurationManager, GIFTPreviewConfiguration } from './previewConfig';
 import GIFTParser from './gift';
+import createSnippetPreview from "./snippets";
 
 /**
  * Strings used inside the gift preview.
@@ -70,8 +71,14 @@ export class GIFTContentProvider {
 		const csp = this.getCspForResource(sourceUri, nonce);
 		
 		this.GIFTParser.updateText(giftDocument.getText());
+		
+		let GIFTMarkup;
+		if (giftDocument.getText().length === 0) {
+			GIFTMarkup = createSnippetPreview();
+		} else {
+			GIFTMarkup = this.GIFTParser.getHTML();
+		}
 
-		const GIFTMarkup = this.GIFTParser.html;
         // const parsedDoc = GIFTMarkup.split(/\r?\n/).map((l: any, i: any) => 
 		// 	l.replace(this.TAG_RegEx, (
 		// 		match: string, p1: string, p2: string, p3: string, 
@@ -92,6 +99,7 @@ export class GIFTContentProvider {
 			<script src="${this.extensionResourcePath('pre.js')}" nonce="${nonce}"></script>
 			<script src="${this.extensionResourcePath('index.js')}" nonce="${nonce}"></script>
 			${this.getStyles(sourceUri, config)}
+			<link rel="stylesheet" class="code-user-style" href="${this.extensionResourcePath("github-markdown-css.css")}" type="text/css" media="screen">
 			<link rel="stylesheet" class="code-user-style" href="${this.extensionResourcePath("styles.css")}" type="text/css" media="screen">
 			<base href="${giftDocument.uri.with({ scheme: 'vscode-resource' }).toString(true)}">
 		</head>
