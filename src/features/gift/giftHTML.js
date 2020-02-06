@@ -1,5 +1,5 @@
 import marked from "marked";
-import Hashes from "jshashes";
+import crypto from "crypto";
 
 export default function giftPreviewHTML(questions) {
   if (!questions) return ``;
@@ -87,12 +87,13 @@ function makeTitle(type, title) {
 function formatAnswers(choices, type) {
   let result = ``;
   
-  const hash = new Hashes.MD5();
+  const hash = crypto.randomBytes(10).toString('hex');
   
   if (type === "MC") {
     let numberOfCorrect = 0;
+
     choices.forEach(choice => (choice.isCorrect ? numberOfCorrect++ : null));
-    let type = numberOfCorrect > 1 ? "checkbox" : "radio";
+    let type = numberOfCorrect === 0 ? "checkbox" : "radio";
 
 
     result += `Select one${type === "checkbox" ? " or more:" : ":"}`;
@@ -100,15 +101,13 @@ function formatAnswers(choices, type) {
     for (let choice of choices) {
       result += `
       <div class="custom-input">
-        <input type="${type}" name=${hash}>
-          <label class="${
-            choice.isCorrect ? "correct" : "wrong"
-          } for="${hash}">
+        <label class="${choice.isCorrect ? "correct" : "wrong"}">
+          <input type="${type}" name="${hash}">
           ${conditionalDisplay(choice.weight, `<em>(${choice.weight}%)</em>`)}
           ${formatText(choice.text)} 
           ${choice.feedback !== null ? ` [${formatText(choice.feedback)}]` : ``}
+          </input>
         </label>
-        </input>
       </div>
     `;
     }
@@ -144,23 +143,19 @@ function formatAnswers(choices, type) {
     result += `Select one:`;
     result += `
       <div class="custom-input">
-        <input type="radio" name="${hash}">
-          <label class="${choices.isCorrect ? "correct" : "wrong"} for="${hash}">
-            True ${
-              isTrue ? feedback(correctFeedback) : feedback(incorrectFeedback)
-            }
-          </label>
-        </input>
+        <label class="${choices.isCorrect ? "correct" : "wrong"}">
+          <input type="radio" name="${hash}"> 
+            True ${isTrue ? feedback(correctFeedback) : feedback(incorrectFeedback)}
+          </input>
+        </label>
       </div>
 
       <div class="custom-input">
-      <input type="radio" name="${hash}">
-        <label class="${choices.isCorrect ? "correct" : "wrong"} for="${hash}">
-          False ${
-            !isTrue ? feedback(correctFeedback) : feedback(incorrectFeedback)
-          }
-        </label>
-      </input>
+      <label class="${choices.isCorrect ? "correct" : "wrong"}">
+        <input type="radio" name="${hash}">
+          False ${!isTrue ? feedback(correctFeedback) : feedback(incorrectFeedback)}
+        </input>
+      </label>
     </div>
     `;
   }
