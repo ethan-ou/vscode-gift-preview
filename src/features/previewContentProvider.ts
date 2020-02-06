@@ -12,7 +12,6 @@ const localize = nls.loadMessageBundle();
 import { Logger } from '../logger';
 import { ContentSecurityPolicyArbiter, GIFTPreviewSecurityLevel } from '../security';
 import { GIFTPreviewConfigurationManager, GIFTPreviewConfiguration } from './previewConfig';
-import * as cheerio from "cheerio";
 import GIFTParser from './gift';
 
 /**
@@ -45,8 +44,6 @@ export class GIFTContentProvider {
 	) { 
 		this.GIFTParser = new GIFTParser();
 	}
-
-	private readonly TAG_RegEx = /^\s*?\<(p|h[1-6]|img|code|div|blockquote|li)((\s+.*?)(class="(.*?)")(.*?\>)|\>|\>|\/\>|\s+.*?\>)/;
 
 	public provideTextDocumentContent(
 		giftDocument: vscode.TextDocument,
@@ -83,8 +80,6 @@ export class GIFTContentProvider {
 		// 	`<${p1} class="code-line" ${p2}` : 
 		// 	`<${p1} ${p3} class="${p5} code-line" ${p6}`)
 		// ).join("\n");
-
-		const removeBlankParagraphs = /<section[^>]*>[\s]*<p[^>]*><\/p[^>]*>[\s]*<\/section>/g;
 
 		const prependDoc = `
 		<head>
