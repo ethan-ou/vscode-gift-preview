@@ -52,6 +52,7 @@ function sortQuestionType(q) {
     case "Essay":
       return `${makeTitle("Essay", q.title)}
         <p>${formatText(q.stem)}</p>
+        <textarea></textarea>
         ${formatFeedback(q.globalFeedback)}
         `;
     case "TF":
