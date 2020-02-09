@@ -49,6 +49,7 @@ body {
   background-color: #def2f8;
   border: solid #c7e4e4 1px;
   border-radius: 6px;
+  box-shadow: 0px 2px 4px rgb(167, 167, 167);
 }
 
 .vscode-light {
