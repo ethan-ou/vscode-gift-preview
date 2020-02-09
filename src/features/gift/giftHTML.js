@@ -238,8 +238,9 @@ function formatText(giftText) {
   switch (giftText.format) {
     case "moodle":
     case "plain":
-    case "html":
       return giftText.text;
+    case "html":
+      return giftText.text.trim().replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
     case "markdown":
       return marked(giftText.text);
     default:
