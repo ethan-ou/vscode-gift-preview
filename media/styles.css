@@ -99,6 +99,11 @@ select {
   text-transform: none;
 }
 
+textarea {
+  width: 100%; 
+  height: 7rem
+}
+
 input {
   text-rendering: auto;
   color: -internal-light-dark-color(black, white);
