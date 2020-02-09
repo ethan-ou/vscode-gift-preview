@@ -233,9 +233,7 @@ function formatText(giftText) {
 
 function formatFeedback(feedback) {
   return feedback !== null
-    ? `<p style="margin-left: 40px"><em>General feedback:</em>${formatText(
-        feedback
-      )}</p>`
+    ? `<div class="moodle-alt"><p>${formatText(feedback)}</p></div>`
     : ``;
 }
 

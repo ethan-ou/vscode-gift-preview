@@ -18,6 +18,15 @@ body {
   background-color: #def2f8;
   border: solid #c7e4e4 1px;
   border-radius: 6px;
+.moodle-alt {
+  position: relative;
+  margin-top: 1rem;
+  padding: 0 1rem;
+  background-color: #fff8e2;
+  color: #2b2101;
+  border: solid #fff8dc 1px;
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px #bbb6a1;
 }
 
 .category {
