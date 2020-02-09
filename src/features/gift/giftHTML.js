@@ -87,15 +87,14 @@ function makeTitle(type, title) {
 
 function formatAnswers(choices, type) {
   let result = ``;
-  
-  const hash = crypto.randomBytes(10).toString('hex');
-  
+
+  const hash = crypto.randomBytes(10).toString("hex");
+
   if (type === "MC") {
     let numberOfCorrect = 0;
 
     choices.forEach(choice => (choice.isCorrect ? numberOfCorrect++ : null));
     let type = numberOfCorrect === 0 ? "checkbox" : "radio";
-
 
     result += `Select one${type === "checkbox" ? " or more:" : ":"}`;
 
