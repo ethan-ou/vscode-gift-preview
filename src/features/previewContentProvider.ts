@@ -100,6 +100,7 @@ export class GIFTContentProvider {
 			<script src="${this.extensionResourcePath('index.js')}" nonce="${nonce}"></script>
 			${this.getStyles(sourceUri, config)}
 			<link rel="stylesheet" class="code-user-style" href="${this.extensionResourcePath("github-markdown-css.css")}" type="text/css" media="screen">
+			<link rel="stylesheet" class="code-user-style" href="${this.extensionResourcePath("font-awesome/css/all.css")}" type="text/css" media="screen">
 			<link rel="stylesheet" class="code-user-style" href="${this.extensionResourcePath("styles.css")}" type="text/css" media="screen">
 			<base href="${giftDocument.uri.with({ scheme: 'vscode-resource' }).toString(true)}">
 		</head>

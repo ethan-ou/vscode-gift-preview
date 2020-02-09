@@ -100,13 +100,20 @@ function formatAnswers(choices, type) {
     result += `Select one${type === "checkbox" ? " or more:" : ":"}`;
 
     for (let choice of choices) {
+      let correct = numberOfCorrect === 0 ? (choice.weight > 0 ? true : false) : choice.isCorrect
+
       result += `
       <div class="custom-input">
         <label class="${choice.isCorrect ? "correct" : "wrong"}">
           <input type="${type}" name="${hash}">
           ${conditionalDisplay(choice.weight, `<em>(${choice.weight}%)</em>`)}
           ${formatText(choice.text)} 
-          ${choice.feedback !== null ? ` [${formatText(choice.feedback)}]` : ``}
+          ${formatAnswerIcon(correct)}
+          ${
+            choice.feedback !== null
+              ? `<span class="feedback">${formatText(choice.feedback)}</span>`
+              : ``
+          }
           </input>
         </label>
       </div>
@@ -129,22 +136,32 @@ function formatAnswers(choices, type) {
     const incorrectFeedback = choices && choices.incorrectFeedback;
 
     const feedback = choice =>
-      choice !== null ? ` [${formatText(choice)}]` : ``;
+      choice !== null
+        ? `${formatText(choice)}`
+        : ``;
 
     result += `Select one:`;
     result += `
       <div class="custom-input">
-        <label class="${choices.isCorrect ? "correct" : "wrong"}">
+        <label class="${isTrue ? "correct" : "wrong"}">
           <input type="radio" name="${hash}"> 
-            True ${isTrue ? feedback(correctFeedback) : feedback(incorrectFeedback)}
+            True ${formatAnswerIcon(isTrue)} ${
+      isTrue
+        ? `<span class="feedback">${feedback(correctFeedback)}</span>`
+        : `<span class="feedback">${feedback(incorrectFeedback)}</span>`
+    }
           </input>
         </label>
       </div>
 
       <div class="custom-input">
-      <label class="${choices.isCorrect ? "correct" : "wrong"}">
+      <label class="${!isTrue ? "correct" : "wrong"}">
         <input type="radio" name="${hash}">
-          False ${!isTrue ? feedback(correctFeedback) : feedback(incorrectFeedback)}
+          False ${formatAnswerIcon(!isTrue)} ${
+      !isTrue
+        ? `<span class="feedback">${feedback(correctFeedback)}</span>`
+        : `<span class="feedback">${feedback(incorrectFeedback)}</span>`
+    }
         </input>
       </label>
     </div>
@@ -202,8 +219,8 @@ function formatMatching(matchPairs) {
     </select>
     `;
 
-    for (let match of matchPairs) {
-      result += `
+  for (let match of matchPairs) {
+    result += `
       <tr>
         <td style="padding-right: 1rem">
         ${formatText(match.subquestion)} 
@@ -214,8 +231,8 @@ function formatMatching(matchPairs) {
         </td>
       </tr>
       `;
-    }
-    return `<table><tbody>${result}</tbody></table>`;
+  }
+  return `<table><tbody>${result}</tbody></table>`;
 }
 
 function formatText(giftText) {
@@ -235,6 +252,12 @@ function formatFeedback(feedback) {
   return feedback !== null
     ? `<div class="moodle-alt"><p>${formatText(feedback)}</p></div>`
     : ``;
+}
+
+function formatAnswerIcon(correct) {
+  return correct
+    ? `<i class="fas fa-check icon" style="color: #5cb85c"></i>`
+    : `<i class="fas fa-times icon" style="color: #d9534f"></i>`;
 }
 
 function conditionalDisplay(variable, output) {

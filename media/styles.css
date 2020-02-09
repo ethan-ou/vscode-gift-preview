@@ -11,6 +11,16 @@ body {
   margin: 0.5rem, 0rem;
 }
 
+.feedback {
+  color: gray;
+}
+
+.icon {
+  vertical-align: middle; 
+  margin-left: 0.1rem; 
+  margin-right:0.2rem
+}
+
 .moodle {
   position: relative;
   padding: 1rem 1rem;
