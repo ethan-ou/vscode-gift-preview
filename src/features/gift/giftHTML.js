@@ -121,16 +121,6 @@ function formatAnswers(choices, type) {
         Answer: <input type="text" placeholder="${choiceText.join(", ")}">
       </div>
     `;
-
-    // for (let choice of choices) {
-    //   result += `
-    //   <p>
-    //   ${conditionalDisplay(choice.weight, `<em>(${choice.weight}%)</em>`)}
-    //   ${formatText(choice.text)}
-    //   ${choice.feedback !== null ? ` [${formatText(choice.feedback)}]` : ``}
-    //   </p>
-    //   `;
-    // }
   }
 
   if (type === "TF") {
