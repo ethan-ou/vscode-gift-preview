@@ -1,3 +1,15 @@
+:root {
+  --light-gray: rgb(202, 202, 202);
+  --moodle-blue: #def2f8;
+  --moodle-blue-dark: #c7e4e4;
+
+  --moodle-alt-light: #fff8e2;
+  --moodle-alt: #fcefdc;
+  --moodle-alt-dark: #b8945e;
+  --moodle-alt-darker: #7d5a29;
+  --moodle-alt-darkest: #2b2101;
+}
+
 * {
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
@@ -12,7 +24,18 @@ body {
 }
 
 .feedback {
-  color: gray;
+  color: rgb(121, 148, 148);
+}
+
+.weight {
+  background-color: var(--moodle-alt-light);
+  box-shadow: 0px 1px 1px var(--light-gray);
+  border-radius: 3px;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+  padding-top: 0.05rem;
+  padding-bottom: 0.05rem;
+  color: var(--moodle-alt-darker);
 }
 
 .icon {
@@ -25,19 +48,19 @@ body {
   position: relative;
   padding: 1rem 1rem;
   margin-bottom: 0.5rem;
-  background-color: #def2f8;
-  border: solid #c7e4e4 1px;
+  background-color: var(--moodle-blue);
+  border: solid var(--moodle-blue-dark) 1px;
   border-radius: 6px;
-  box-shadow: 0px 2px 4px rgb(167, 167, 167);
+  box-shadow: 0px 1px 3px var(--light-gray);
 }
 
 .moodle-alt {
   position: relative;
   margin-top: 1rem;
   padding: 0 1rem;
-  background-color: #fff8e2;
-  color: #2b2101;
-  border: solid #fff8dc 1px;
+  background-color: var(--moodle-alt-light);
+  color: var(--moodle-alt-darkest);
+  border: solid var(--moodle-alt) 1px;
   border-radius: 6px;
   box-shadow: 0px 2px 6px #bbb6a1;
 }
@@ -46,10 +69,10 @@ body {
   padding: 1rem 1rem;
   margin-bottom: 0.5rem;
   font-size: 1rem;
-  background-color: #def2f8;
-  border: solid #c7e4e4 1px;
+  background-color: var(--moodle-blue);
+  border: solid var(--moodle-blue-dark) 1px;
   border-radius: 6px;
-  box-shadow: 0px 2px 4px rgb(167, 167, 167);
+  box-shadow: 0px 1px 3px var(--light-gray);
 }
 
 .vscode-light {
@@ -66,7 +89,7 @@ body {
 }
 
 .vscode-light .moodle {
-  background-color: #def2f8;
+  background-color: var(--moodle-blue);
 }
 
 /* .vscode-light .code-active-line .moodle {
@@ -74,7 +97,7 @@ body {
 } */
 
 .vscode-dark .moodle {
-  background-color: #def2f8;
+  background-color: var(--moodle-blue);
 }
 
 /* .vscode-dark .code-active-line .moodle {
