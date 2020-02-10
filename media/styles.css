@@ -62,7 +62,7 @@ body {
   color: var(--moodle-alt-darkest);
   border: solid var(--moodle-alt) 1px;
   border-radius: 6px;
-  box-shadow: 0px 2px 6px #bbb6a1;
+  box-shadow: 0px 2px 5px #c1ba9b;
 }
 
 .category {
@@ -86,6 +86,7 @@ body {
 
 .vscode-high-contrast {
   color: #000;
+  background-color: #fff;
 }
 
 .vscode-light .moodle {
