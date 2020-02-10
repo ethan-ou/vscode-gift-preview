@@ -240,7 +240,10 @@ function formatText(giftText) {
     case "plain":
       return giftText.text;
     case "html":
-      return giftText.text.trim().replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
+      return giftText.text
+      .trim()
+      .replace(/<br>/g, '')
+      .replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
     case "markdown":
       return marked(giftText.text);
     default:
