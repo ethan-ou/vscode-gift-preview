@@ -3,6 +3,7 @@
   --correct-light: hsla(134, 68%, 95%, 1);
 
   --light-gray: rgb(202, 202, 202);
+  --moodle-blue-lighter: hsla(194, 55%, 98%, 1);
   --moodle-blue-light: hsla(194, 60%, 96%, 1);
   --moodle-blue: #def2f8;
   --moodle-blue-dark: #c7e4e4;
@@ -63,7 +64,7 @@ body {
   padding-top: 0.4rem;
   padding-bottom: 0.4rem;
   border-radius: 4px;
-  background-color: white;
+  background-color: var(--moodle-blue-lighter);
 }
 
 .category .question-type .raised {
