@@ -97,7 +97,7 @@ body {
   position: relative;
   padding: 1rem 1rem;
   margin-bottom: 0.5rem;
-  background-color: var(--moodle-blue);
+  background-color: var(--moodle-blue-light);
   border: solid var(--moodle-blue-dark) 1px;
   border-radius: 6px;
   box-shadow: 0px 1px 3px var(--light-gray);
@@ -117,8 +117,8 @@ body {
 .category {
   padding: 1rem 1rem;
   margin-bottom: 0.5rem;
-  background-color: var(--moodle-blue);
   font-size: calc(var(--vscode-font-size) * 1.25);
+  background-color: var(--moodle-blue-light);
   border: solid var(--moodle-blue-dark) 1px;
   border-radius: 6px;
   box-shadow: 0px 1px 3px var(--light-gray);
@@ -139,7 +139,7 @@ body {
 }
 
 .vscode-light .moodle {
-  background-color: var(--moodle-blue);
+  background-color: var(--moodle-blue-light);
 }
 
 /* .vscode-light .code-active-line .moodle {
@@ -147,7 +147,7 @@ body {
 } */
 
 .vscode-dark .moodle {
-  background-color: var(--moodle-blue);
+  background-color: var(--moodle-blue-light);
 }
 
 /* .vscode-dark .code-active-line .moodle {
