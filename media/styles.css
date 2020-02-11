@@ -1,4 +1,7 @@
 :root {
+  --correct: hsla(134, 31%, 32%, 1);
+  --correct-light: hsla(134, 68%, 95%, 1);
+
   --light-gray: rgb(202, 202, 202);
   --moodle-blue: #def2f8;
   --moodle-blue-dark: #c7e4e4;
@@ -36,6 +39,11 @@ body {
   padding-top: 0.05rem;
   padding-bottom: 0.05rem;
   color: var(--moodle-alt-darker);
+}
+
+.weight-correct {
+  color: var(--correct);
+  background-color: var(--correct-light);
 }
 
 .icon {

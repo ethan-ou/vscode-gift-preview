@@ -103,9 +103,14 @@ function formatAnswers(choices, type) {
 
       result += `
       <div class="custom-input">
-        <label class="${choice.isCorrect ? "correct" : "wrong"}">
+        <label class="${correct ? "correct" : "wrong"}">
           <input type="${type}" name="${hash}">
-          ${conditionalDisplay(choice.weight, `<span class="weight">${choice.weight}%</span>`)}
+          ${conditionalDisplay(
+            choice.weight,
+            `<span class="weight ${correct ? `weight-correct` : ``}">${
+              choice.weight
+            }%</span>`
+          )}
           ${formatText(choice.text)} 
           ${formatAnswerIcon(correct)}
           ${
