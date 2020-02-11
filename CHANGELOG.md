@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## 0.0.4 (11-02-2020)
+
+- Added new styling for positive weighted questions (e.g. 10%, 20%) in multiple answer questions
+- Improved question category styling
+- Changes in theme to improve readability and contrast of text
+- Marginally reduced plugin size
+
 ## 0.0.3 (10-02-2020)
 
 - Fixed issue with comments showing up in preview
