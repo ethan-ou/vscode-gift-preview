@@ -79,15 +79,6 @@ export class GIFTContentProvider {
 			GIFTMarkup = this.GIFTParser.getHTML();
 		}
 
-        // const parsedDoc = GIFTMarkup.split(/\r?\n/).map((l: any, i: any) => 
-		// 	l.replace(this.TAG_RegEx, (
-		// 		match: string, p1: string, p2: string, p3: string, 
-		// 		p4: string, p5: string, p6: string, offset: number) => 
-		// 	typeof p5 !== "string" ? 
-		// 	`<${p1} class="code-line" ${p2}` : 
-		// 	`<${p1} ${p3} class="${p5} code-line" ${p6}`)
-		// ).join("\n");
-
 		const prependDoc = `
 		<head>
 			<meta http-equiv="Content-type" content="text/html" charset=UTF-8">
