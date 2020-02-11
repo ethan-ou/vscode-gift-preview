@@ -7,7 +7,7 @@ export default function giftPreviewHTML(questions) {
   let result = ``;
   for (let question of questions) {
     if (question.type === "Category")
-      result += `<div class="category">${sortQuestionType(question)}</div>`;
+      result += `<section class="category">${sortQuestionType(question)}</section>`;
     else {
       result += `<section class="moodle">${sortQuestionType(
         question
@@ -82,7 +82,18 @@ function sortQuestionType(q) {
 }
 
 function makeTitle(type, title) {
-  return `<b>${type} ${conditionalDisplay(title, `" ${title} "`)}</b>`;
+  return `
+    <div class="title">
+      <span>${conditionalDisplay(
+        title,
+        `${title}`,
+        `<span class="moodle-blue-darker">Optional Title...</span>`
+      )}</span>
+      <span class="question-type">
+        <span class="raised">${type}</span>
+      </span>
+    </div>
+  `;
 }
 
 function formatAnswers(choices, type) {
@@ -269,6 +280,6 @@ function formatAnswerIcon(correct) {
     : faTimes;
 }
 
-function conditionalDisplay(variable, output) {
-  return variable !== null ? output : ``;
+function conditionalDisplay(variable, output, output2 = ``) {
+  return variable !== null ? output : output2;
 }
