@@ -157,6 +157,7 @@ export class GIFTPreview {
 
 		vscode.window.onDidChangeActiveTextEditor(editor => {
 			if (editor && isGIFTFile(editor.document) && !this._locked) {
+				this.forceUpdate = true;
 				this.update(editor.document.uri);
 			}
 		}, null, this.disposables);
