@@ -1,7 +1,3 @@
-import fs from "fs";
-import path from 'path';
-import marked from "marked";
-
 export default function createSnippetPreview() {
     return `<div class="markdown-body" style="
     display: flex;
