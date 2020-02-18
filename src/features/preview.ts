@@ -324,7 +324,7 @@ export class GIFTPreview {
 			}
 			return;
 		}
-		this.forceUpdate = false;
+		
 
 		this.currentVersion = { resource, version: document.version };
 		const content: string = this._contentProvider.provideTextDocumentContent(document, this._previewConfigurations, this.line, this.state);
@@ -332,8 +332,19 @@ export class GIFTPreview {
 			this.editor.title = GIFTPreview.getPreviewTitle(this._resource, this._locked);
 			this.editor.iconPath = this.iconPath;
 			this.editor.webview.options = GIFTPreview.getWebviewOptions(resource);
-			this.editor.webview.html = content;
+
+			if (!this.editor.webview.html || this.forceUpdate) {
+				this.editor.webview.html = content;
+			} else {
+				this.postMessage({
+					type: 'updateHTML',
+					html: content,
+					source: this.resource.toString()
+				});
+			}
 		}
+
+		this.forceUpdate = false;
 	}
 
 	private static getWebviewOptions(

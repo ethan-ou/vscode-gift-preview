@@ -248,6 +248,7 @@
 		"eol": "^0.9.1",
 		"lodash.throttle": "4.1.1",
 		"marked": "^0.8.0",
+		"morphdom": "^2.5.12",
 		"vscode-nls": "3.2.4"
 	},
 	"devDependencies": {

@@ -8,6 +8,7 @@ import { onceDocumentLoaded } from './events';
 import { createPosterForVsCode } from './messaging';
 import { getEditorLineNumberForPageOffset, scrollToRevealSourceLine } from './scroll-sync';
 import { getSettings, getData } from './settings';
+import { updateHTML } from './update';
 import throttle = require('lodash.throttle');
 
 declare var acquireVsCodeApi: any;
@@ -68,6 +69,10 @@ window.addEventListener('message', event => {
 
 		case 'updateView':
 			onUpdateView(event.data.line, settings);
+			break;
+
+		case 'updateHTML':
+			updateHTML(event.data.html);
 			break;
 	}
 }, false);
