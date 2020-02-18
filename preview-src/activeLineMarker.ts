@@ -2,14 +2,15 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { getElementsForSourceLine } from './scroll-sync';
+// import { getElementsForSourceLine } from './scroll-sync';
 
 export class ActiveLineMarker {
 	private _current: any;
 
 	onDidChangeTextEditorSelection(line: number) {
-		const { previous } = getElementsForSourceLine(line);
-		this._update(previous && previous.element);
+		// Uncomment if active line class is needed
+		// const { previous } = getElementsForSourceLine(line);
+		// this._update(previous && previous.element);
 	}
 
 	_update(before: HTMLElement | undefined) {
