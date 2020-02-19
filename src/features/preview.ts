@@ -327,18 +327,18 @@ export class GIFTPreview {
 		
 
 		this.currentVersion = { resource, version: document.version };
-		const content: string = this._contentProvider.provideTextDocumentContent(document, this._previewConfigurations, this.line, this.state);
+		const content = this._contentProvider.provideTextDocumentContent(document, this._previewConfigurations, this.line, this.state);
 		if (this._resource === resource) {
 			this.editor.title = GIFTPreview.getPreviewTitle(this._resource, this._locked);
 			this.editor.iconPath = this.iconPath;
 			this.editor.webview.options = GIFTPreview.getWebviewOptions(resource);
-
 			if (!this.editor.webview.html || this.forceUpdate) {
-				this.editor.webview.html = content;
+				this.editor.webview.html = content.head + content.body;
 			} else {
 				this.postMessage({
 					type: 'updateHTML',
-					html: content,
+					html: content.body,
+					state: content.blankState,
 					source: this.resource.toString()
 				});
 			}

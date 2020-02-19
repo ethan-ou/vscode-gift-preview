@@ -8,7 +8,7 @@ import { onceDocumentLoaded } from './events';
 import { createPosterForVsCode } from './messaging';
 import { getEditorLineNumberForPageOffset, scrollToRevealSourceLine } from './scroll-sync';
 import { getSettings, getData } from './settings';
-import { updateHTML } from './update';
+import { updateHTML, displaySnippets } from './update';
 import throttle = require('lodash.throttle');
 
 declare var acquireVsCodeApi: any;
@@ -22,6 +22,10 @@ const vscode = acquireVsCodeApi();
 // Set VS Code state
 const state = getData('data-state');
 vscode.setState(state);
+
+let snippets = false;
+let prevHTML: string;
+let prevLine: {line: any, settings: any};
 
 const messaging = createPosterForVsCode(vscode);
 
@@ -69,10 +73,20 @@ window.addEventListener('message', event => {
 
 		case 'updateView':
 			onUpdateView(event.data.line, settings);
+			prevLine = { line: event.data.line, settings };
 			break;
 
 		case 'updateHTML':
-			updateHTML(event.data.html);
+			updateHTML(event.data.html, {
+				initial: event.data.state,
+				snippets: snippets
+			});
+			prevHTML = event.data.html;
+
+			if (!snippets && prevLine) {
+				onUpdateView(prevLine.line, prevLine.settings);
+			}
+			
 			break;
 	}
 }, false);
@@ -116,6 +130,27 @@ document.addEventListener('click', event => {
 			}
 			break;
 		}
+		
+		if (node) {
+			if (node.getAttribute('data-js') === "action-button") {
+				snippets = !snippets;
+
+				if (prevHTML) {
+					updateHTML(prevHTML, {
+						snippets: snippets
+					});
+				} else {
+					displaySnippets(document, snippets);
+				}
+				 
+				if (!snippets && prevLine) {
+					onUpdateView(prevLine.line, prevLine.settings);
+				}
+				break;
+			}
+			break;
+		}
+
 		node = node.parentNode;
 	}
 }, true);

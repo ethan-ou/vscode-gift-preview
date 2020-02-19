@@ -14,6 +14,7 @@ import { ContentSecurityPolicyArbiter, GIFTPreviewSecurityLevel } from '../secur
 import { GIFTPreviewConfigurationManager, GIFTPreviewConfiguration } from './previewConfig';
 import GIFTParser from './gift';
 import createSnippetPreview from "./snippets";
+import { actionButton } from "./ui";
 
 /**
  * Strings used inside the gift preview.
@@ -51,7 +52,7 @@ export class GIFTContentProvider {
 		previewConfigurations: GIFTPreviewConfigurationManager,
 		initialLine: number | undefined = undefined,
 		state?: any
-	): string {
+	) {
 		const sourceUri = giftDocument.uri;
 		const config = previewConfigurations.loadAndCacheConfiguration(sourceUri);
 		const initialData = {
@@ -72,14 +73,10 @@ export class GIFTContentProvider {
 		
 		this.GIFTParser.updateText(giftDocument.getText());
 		
-		let GIFTMarkup;
-		if (giftDocument.getText().length === 0) {
-			GIFTMarkup = createSnippetPreview();
-		} else {
-			GIFTMarkup = this.GIFTParser.getHTML();
-		}
+		const displaySnippet = giftDocument.getText().length === 0 ? 'block' : 'none';
+		const displayPreview = giftDocument.getText().length === 0 ? 'none' : 'block';
 
-		const prependDoc = `
+		const head = `
 		<head>
 			<meta http-equiv="Content-type" content="text/html" charset=UTF-8">
 			${csp}
@@ -94,11 +91,27 @@ export class GIFTContentProvider {
 			<link rel="stylesheet" class="code-user-style" href="${this.extensionResourcePath("styles.css")}" type="text/css" media="screen">
 			<base href="${giftDocument.uri.with({ scheme: 'vscode-resource' }).toString(true)}">
 		</head>
-		<body class="vscode-body ${config.markEditorSelection ? 'showEditorSelection' : ''}">
-			${GIFTMarkup}
-		</body>
 		`;
-		return prependDoc;
+
+		const body = `
+			<body class="vscode-body ${config.markEditorSelection ? 'showEditorSelection' : ''}">
+				<div data-js="snippet-div" style="display: ${displaySnippet}">
+					${createSnippetPreview()}
+				</div>
+				<div data-js="preview-div" style="display: ${displayPreview}">
+					${this.GIFTParser.getHTML()}
+				</div>
+				<div data-js="button-div" style="display: ${displayPreview}">
+					${actionButton}
+				</div>
+			</body>
+		`;
+
+		return {
+			head,
+			body,
+			blankState: giftDocument.getText().length === 0 ? true : false
+		};
 	}
 
 	private extensionResourcePath(mediaFile: string): string {
