@@ -157,7 +157,6 @@ export class GIFTPreview {
 
 		vscode.window.onDidChangeActiveTextEditor(editor => {
 			if (editor && isGIFTFile(editor.document) && !this._locked) {
-				this.forceUpdate = true;
 				this.update(editor.document.uri);
 			}
 		}, null, this.disposables);
@@ -205,6 +204,7 @@ export class GIFTPreview {
 		// If we have changed resources, cancel any pending updates
 		const isResourceChange = resource.fsPath !== this._resource.fsPath;
 		if (isResourceChange) {
+			this.forceUpdate = true;
 			clearTimeout(this.throttleTimer);
 			this.throttleTimer = undefined;
 		}
@@ -224,7 +224,6 @@ export class GIFTPreview {
 	}
 
 	public refresh() {
-		this.forceUpdate = true;
 		this.update(this._resource);
 	}
 
