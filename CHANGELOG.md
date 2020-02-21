@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## 0.0.5 (21-02-2020)
+
+- Added button for users to access snippets panel while writing questions
+- Added red background to questions that have errors in syntax
+- Added advanced snippets to the snippets panel
+- Major improvements to performance and memory usage 
+
 ## 0.0.4 (11-02-2020)
 
 - Added new styling for positive weighted questions (e.g. 10%, 20%) in multiple answer questions
