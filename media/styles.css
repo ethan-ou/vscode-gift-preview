@@ -242,32 +242,42 @@ input {
 }
 
 .action-button {
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 4rem;
+  height: 4rem;
   background-color: #32424a;
   border-radius: 50%;
   box-shadow: 0 6px 10px 0 #666;
   transition: all 0.15s ease-in-out;
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   color: #fff;
   text-align: center;
-  line-height: 4.5rem;
+  line-height: 4rem;
   position: fixed;
-  right: 2rem;
-  bottom: 2rem;
+  right: 1.5rem;
+  bottom: 1.5rem;
   font-weight: 600;
   transform: scale(0.93);
-  opacity: 0.3;
+  opacity: 0.35;
   user-select: none;
 }
 
 .action-button:hover {
   box-shadow: 0 6px 14px 0 #666;
   transform: scale(1);
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .action-button:active {
+  background-color: #10181d;
   transform: scale(0.85);
   opacity: 1
+}
+
+.markdown-body table {
+  width: 100%;
+  display: table;
+}
+
+.markdown-body td {
+  width: 50%;
 }
