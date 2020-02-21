@@ -71,6 +71,7 @@ const snippets = `
         </tbody>
     </table>
     <p><strong>For Titles:</strong> add <code>title</code> at the end of the snippet (e.g. <code>multiple choice question title</code>).</p>
+    <br>
     <h2 id="advanced-snippets">Advanced Snippets</h2>
     <p><strong>Note:</strong> Numbers represent number of options (e.g. <code>mc2</code> is a multiple choice with two options).</p>
     <table>
@@ -82,50 +83,23 @@ const snippets = `
         </thead>
         <tbody>
             <tr>
-                <td align="right"><code>mcq</code>
-                    <br><code>mc2</code>
-                    <br><code>mc3</code>
-                    <br><code>mc4</code>
-                    <br><code>mc5</code>
-                    <br><code>mc6</code></td>
+                <td align="right"><code>mcq</code>, <code>mc[2-6]</code></td>
                 <td><code>multiple choice question</code></td>
             </tr>
             <tr>
-                <td align="right"><code>mcqm</code>
-                    <br><code>mc2m</code>
-                    <br><code>mc3m</code>
-                    <br><code>mc4m</code>
-                    <br><code>mc5m</code>
-                    <br><code>mc6m</code></td>
+                <td align="right"><code>mcqm</code>, <code>mc[2-6]m</code></td>
                 <td><code>multiple choice question multiple</code></td>
             </tr>
             <tr>
-                <td align="right"><code>maq</code>
-                    <br><code>ma2</code>
-                    <br><code>ma3</code>
-                    <br><code>ma4</code>
-                    <br><code>ma5</code>
-                    <br><code>ma6</code></td>
+                <td align="right"><code>maq</code>, <code>ma[2-6]</code></td>
                 <td><code>matching question</code></td>
             </tr>
             <tr>
-                <td align="right"><code>saq</code>
-                    <br><code>sa1</code>
-                    <br><code>sa2</code>
-                    <br><code>sa3</code>
-                    <br><code>sa4</code>
-                    <br><code>sa5</code>
-                    <br><code>sa6</code></td>
+                <td align="right"><code>saq</code>, <code>sa[1-6]</code></td>
                 <td><code>short answer question</code></td>
             </tr>
             <tr>
-                <td align="right"><code>mwq</code>
-                    <br><code>mw1</code>
-                    <br><code>mw2</code>
-                    <br><code>ma3</code>
-                    <br><code>ma4</code>
-                    <br><code>ma5</code>
-                    <br><code>ma6</code></td>
+                <td align="right"><code>mwq</code>, <code>mw[1-6]</code></td>
                 <td><code>missing word question</code></td>
             </tr>
             <tr>
@@ -141,8 +115,7 @@ const snippets = `
                 <td><code>numerical question</code></td>
             </tr>
             <tr>
-                <td align="right"><code>cat</code>
-                    <br><code>$CAT</code></td>
+                <td align="right"><code>cat</code>, <code>$CAT</code></td>
                 <td><code>category</code></td>
             </tr>
             <tr>
