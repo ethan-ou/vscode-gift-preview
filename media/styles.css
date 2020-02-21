@@ -14,6 +14,8 @@
   --moodle-alt-dark: #b8945e;
   --moodle-alt-darker: #7d5a29;
   --moodle-alt-darkest: #2b2101;
+  --moodle-error-light: #fff0f0;
+  --moodle-error: #f3d8d8;
 }
 
 * {
@@ -115,6 +117,11 @@ body {
   box-shadow: 0px 2px 5px var(--light-gray);
 }
 
+.moodle-error {
+  background-color: var(--moodle-error-light);
+  border: solid var(--moodle-error) 1px;
+}
+
 .category {
   padding: 1rem 1rem;
   margin-bottom: 0.5rem;
@@ -143,12 +150,20 @@ body {
   background-color: var(--moodle-blue-light);
 }
 
+.vscode-light .moodle-error {
+  background-color: var(--moodle-error-light);
+}
+
 /* .vscode-light .code-active-line .moodle {
   background-color: #fcefdc;
 } */
 
 .vscode-dark .moodle {
   background-color: var(--moodle-blue-light);
+}
+
+.vscode-dark .moodle-error {
+  background-color: var(--moodle-error-light);
 }
 
 /* .vscode-dark .code-active-line .moodle {

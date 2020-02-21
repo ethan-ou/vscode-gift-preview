@@ -1,7 +1,7 @@
 export default function(text) {
     let document = removeBackslash(lineRegex(documentRegex(text))).split(/\r?\n/);
     return document[0] !== ``
-      ? `<section class="moodle">${document
+      ? `<section class="moodle moodle-error">${document
           .map(i => `<p>${i}</p>`)
           .join("")}</section>`
       : ``;
