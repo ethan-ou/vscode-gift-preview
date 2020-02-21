@@ -26,6 +26,7 @@ vscode.setState(state);
 let snippets = false;
 let prevHTML: string;
 let prevLine: {line: any, settings: any};
+let prevSnippetScroll: number = 0;
 
 const messaging = createPosterForVsCode(vscode);
 
@@ -144,8 +145,16 @@ document.addEventListener('click', event => {
 				}
 				 
 				if (!snippets && prevLine) {
-					onUpdateView(prevLine.line, prevLine.settings);
+					prevSnippetScroll = Math.floor(window.scrollY);
+					onUpdateView(prevLine.line, prevLine.settings);	
 				}
+
+				// Scroll to the top of the snippets page, or to where 
+				// the user last scrolled.
+				if (snippets) {
+					window.scrollTo(0, prevSnippetScroll);
+				}
+				
 				break;
 			}
 			break;
