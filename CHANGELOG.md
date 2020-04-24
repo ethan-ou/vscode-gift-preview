@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## 0.0.7 (24-04-2020)
+- Fix issue where drop-downs were not being refreshed
+
 ## 0.0.6 (24-04-2020)
 - Removed duplicate answers from matching question drop-downs
 
