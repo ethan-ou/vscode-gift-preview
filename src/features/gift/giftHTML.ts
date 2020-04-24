@@ -204,7 +204,7 @@ function formatAnswers(choices: any, type: string): string {
       .reduce(
       (sum: string, match: any) =>
         (sum += `
-      <option value=${match}>${match}</option>
+      <option>${match}</option>
       `),
       ""
     );
