@@ -197,18 +197,17 @@ function formatAnswers(choices: any, type: string): string {
   }
 
   if (type === "Matching") {
-    const subAnswers = `
-     <select class="custom-select">
-      <option value="" disabled selected hidden>Choose...</option>
-      ${choices.reduce(
-        (sum: string, match: any) =>
-          (sum += `
-        <option value=${match.subanswer}>${match.subanswer}</option>
-        `),
-        ""
-      )}
-    </select>
-    `;
+    //Filters the answers for duplicates before creating drop-down options
+    const answers = choices
+      .map((item: any) => item.subanswer)
+      .filter((item: any, index: number, arr: any[]) => arr.indexOf(item) === index)
+      .reduce(
+      (sum: string, match: any) =>
+        (sum += `
+      <option value=${match}>${match}</option>
+      `),
+      ""
+    );
 
     return `
       <table>
@@ -221,7 +220,10 @@ function formatAnswers(choices: any, type: string): string {
               ${formatText(choice.subquestion)} 
             </td>
             <td>
-              ${subAnswers}
+              <select class="custom-select">
+                <option value="" disabled selected hidden>Choose...</option>
+                ${answers}
+              </select>
             </td>
           </tr>
           `),
