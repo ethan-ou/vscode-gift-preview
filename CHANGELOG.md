@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## 0.0.6 (24-04-2020)
+- Removed duplicate answers from matching question drop-downs
+
 ## 0.0.5 (21-02-2020)
 
 - Added button for users to access snippets panel while writing questions
