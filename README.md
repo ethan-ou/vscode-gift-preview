@@ -5,11 +5,13 @@
 [![Downloads](https://vsmarketplacebadge.apphb.com/downloads/ethan-ou.vscode-gift-preview.svg)](https://vsmarketplacebadge.apphb.com/downloads-short/ethan-ou.vscode-gift-preview.svg)
 [![Ratings](https://vsmarketplacebadge.apphb.com/rating-short/ethan-ou.vscode-gift-preview.svg)](https://vsmarketplacebadge.apphb.com/rating-short/ethan-ou.vscode-gift-preview.svg)
 
+> **Note:** This extension requires the [GIFT Format Extension](https://github.com/ethan-ou/vscode-gift). We recommend installing the [GIFT Format Pack]() which bundles both this extension and language support for the GIFT Format.
+
 This extension provides a live preview for Moodle's GIFT format. Using this extension, you can write questions in GIFT while viewing the result in a modified version of Moodle's default theme.
 
 Once installed, preview your questions by right-clicking on a GIFT file in Visual Studio Code, then selecting `Open Preview to the Side`. Alternatively, press `CTRL + K` followed by `M` on your keyboard.
 
-See also: GIFT Format Pack, GIFT Format Extension
+See also: [GIFT Format Pack](https://github.com/ethan-ou/vscode-gift-pack), [GIFT Format Extension](https://github.com/ethan-ou/vscode-gift)
 
 ## Table of Contents
 
