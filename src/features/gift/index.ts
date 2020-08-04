@@ -108,7 +108,7 @@ export default class GIFTParser {
   }
 
   private generateHTML(text: string, index: number, array: string[]): string[] {
-    let parsedLine: ParseResult = parser.parse(text);
+    let parsedLine: ParseResult = parser(text);
     const tempArray: string[] = Array.from(array);
 
     if (parsedLine.type === "result") {
@@ -123,7 +123,7 @@ export default class GIFTParser {
 
   private generateLineNumbers(text: string): number[] {
     const lineNumbers: number[] = [];
-    const lines = text.split("\n\n").map(line => line.split("\n").length);
+    const lines = text.split("\n\n").map((line) => line.split("\n").length);
 
     let memory = -1;
     for (let line of lines) {
