@@ -1,5 +1,6 @@
 import marked from "marked";
 import { nanoid } from "nanoid";
+import katex from "katex";
 
 interface Text {
   format: TextFormat;
@@ -288,19 +289,36 @@ function numericalAnswer(choice: any): string {
 }
 
 function formatText(giftText: Text): string {
-  switch (giftText.format) {
+  const { text, format } = giftText;
+
+  const formatText = formatLatex(text);
+
+  switch (format) {
     case "moodle":
     case "plain":
-      return giftText.text;
+      return formatText;
     case "html":
-      return giftText.text.trim().replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
+      return formatText.trim().replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
     case "markdown":
-      return marked(giftText.text)
+      return marked(formatText)
         .trim()
         .replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
     default:
       return ``;
   }
+}
+
+function formatLatex(text: string) {
+  return text
+    .replace(/\$\$(.*?)\$\$/g, (outer, inner) =>
+      katex.renderToString(inner, { displayMode: true })
+    )
+    .replace(/\\\[(.*?)\\\]/g, (outer, inner) =>
+      katex.renderToString(inner, { displayMode: true })
+    )
+    .replace(/\\\((.*?)\\\)/g, (outer, inner) =>
+      katex.renderToString(inner, { displayMode: false })
+    );
 }
 
 function formatGeneralFeedback(feedback: Text): string {

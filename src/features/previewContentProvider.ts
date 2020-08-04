@@ -95,13 +95,18 @@ export class GIFTContentProvider {
 				data-settings="${JSON.stringify(initialData).replace(/"/g, "&quot;")}"
 				data-strings="${JSON.stringify(previewStrings).replace(/"/g, "&quot;")}"
 				data-state="${JSON.stringify(state || {}).replace(/"/g, "&quot;")}">
-			<script src="${this.extensionResourcePath("pre.js")}" nonce="${nonce}"></script>
+      <script src="${this.extensionResourcePath(
+        "pre.js"
+      )}" nonce="${nonce}"></script>
 			<script src="${this.extensionResourcePath(
         "index.js"
       )}" nonce="${nonce}"></script>
 			${this.getStyles(sourceUri, config)}
 			<link rel="stylesheet" class="code-user-style" href="${this.extensionResourcePath(
         "github-markdown-css.css"
+      )}" type="text/css" media="screen">
+      <link rel="stylesheet" class="code-user-style" href="${this.extensionResourcePath(
+        "katex.min.css"
       )}" type="text/css" media="screen">
 			<link rel="stylesheet" class="code-user-style" href="${this.extensionResourcePath(
         "styles.css"
