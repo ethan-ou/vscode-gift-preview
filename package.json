@@ -1,267 +1,264 @@
 {
-	"name": "vscode-gift-preview",
-	"displayName": "GIFT Language Preview",
-	"description": "%description%",
-	"version": "0.0.7",
-	"publisher": "ethan-ou",
-	"author": "Ethan Ou",
-	"license": "MIT",
-	"readme": "README.md",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/ethan-ou/vscode-gift-preview"
-	},
-	"main": "./out/extension.js",
-	"engines": {
-		"vscode": "^1.31.0"
-	},
-	"keywords": [
-		"gift",
-		"moodle"
-	],
-	"categories": [
-		"Programming Languages"
-	],
-	"activationEvents": [
-		"onLanguage:gift",
-		"onCommand:gift.preview.toggleLock",
-		"onCommand:gift.preview.refresh",
-		"onCommand:gift.showPreview",
-		"onCommand:gift.showPreviewToSide",
-		"onCommand:gift.showLockedPreviewToSide",
-		"onCommand:gift.showSource",
-		"onCommand:gift.showPreviewSecuritySelector",
-		"onWebviewPanel:gift.preview"
-	],
-	"contributes": {
-		"commands": [
-			{
-				"command": "gift.showPreview",
-				"title": "%gift.preview.title%",
-				"category": "Gift",
-				"icon": {
-					"light": "./media/Preview.svg",
-					"dark": "./media/Preview_inverse.svg"
-				}
-			},
-			{
-				"command": "gift.showPreviewToSide",
-				"title": "%gift.previewSide.title%",
-				"category": "Gift",
-				"icon": {
-					"light": "./media/PreviewOnRightPane_16x.svg",
-					"dark": "./media/PreviewOnRightPane_16x_dark.svg"
-				}
-			},
-			{
-				"command": "gift.showLockedPreviewToSide",
-				"title": "%gift.showLockedPreviewToSide.title%",
-				"category": "Gift",
-				"icon": {
-					"light": "./media/PreviewOnRightPane_16x.svg",
-					"dark": "./media/PreviewOnRightPane_16x_dark.svg"
-				}
-			},
-			{
-				"command": "gift.showSource",
-				"title": "%gift.showSource.title%",
-				"category": "Gift",
-				"icon": {
-					"light": "./media/ViewSource.svg",
-					"dark": "./media/ViewSource_inverse.svg"
-				}
-			},
-			{
-				"command": "gift.showPreviewSecuritySelector",
-				"title": "%gift.showPreviewSecuritySelector.title%",
-				"category": "Gift"
-			},
-			{
-				"command": "gift.preview.refresh",
-				"title": "%gift.preview.refresh.title%",
-				"category": "Gift"
-			},
-			{
-				"command": "gift.preview.toggleLock",
-				"title": "%gift.preview.toggleLock.title%",
-				"category": "Gift"
-			}
-		],
-		"menus": {
-			"editor/title": [
-				{
-					"command": "gift.showPreviewToSide",
-					"when": "editorLangId == gift",
-					"alt": "gift.showPreview",
-					"group": "navigation"
-				},
-				{
-					"command": "gift.showSource",
-					"when": "giftPreviewFocus",
-					"group": "navigation"
-				},
-				{
-					"command": "gift.preview.refresh",
-					"when": "giftPreviewFocus",
-					"group": "1_gift"
-				},
-				{
-					"command": "gift.preview.toggleLock",
-					"when": "giftPreviewFocus",
-					"group": "1_gift"
-				},
-				{
-					"command": "gift.showPreviewSecuritySelector",
-					"when": "giftPreviewFocus",
-					"group": "1_gift"
-				}
-			],
-			"explorer/context": [
-				{
-					"command": "gift.showPreviewToSide",
-					"when": "editorLangId == gift",
-					"alt": "gift.showPreview",
-					"group": "navigation"
-				}
-			],
-			"editor/context": [
-				{
-					"command": "gift.showPreviewToSide",
-					"when": "editorLangId == gift",
-					"alt": "gift.showPreview",
-					"group": "navigation"
-				}
-			],
-			"editor/title/context": [
-				{
-					"command": "gift.showPreviewToSide",
-					"when": "editorLangId == gift",
-					"alt": "gift.showPreview",
-					"group": "navigation"
-				}
-			],
-			"commandPalette": [
-				{
-					"command": "gift.showPreview",
-					"when": "editorLangId == gift",
-					"group": "navigation"
-				},
-				{
-					"command": "gift.showPreviewToSide",
-					"when": "editorLangId == gift",
-					"group": "navigation"
-				},
-				{
-					"command": "gift.showLockedPreviewToSide",
-					"when": "editorLangId == gift",
-					"group": "navigation"
-				},
-				{
-					"command": "gift.showSource",
-					"when": "giftPreviewFocus",
-					"group": "navigation"
-				},
-				{
-					"command": "gift.showPreviewSecuritySelector",
-					"when": "editorLangId == gift"
-				},
-				{
-					"command": "gift.showPreviewSecuritySelector",
-					"when": "giftPreviewFocus"
-				},
-				{
-					"command": "gift.preview.toggleLock",
-					"when": "giftPreviewFocus"
-				}
-			]
-		},
-		"keybindings": [
-			{
-				"command": "gift.showPreview",
-				"key": "shift+ctrl+v",
-				"mac": "shift+cmd+v",
-				"when": "editorLangId == gift"
-			},
-			{
-				"command": "gift.showPreviewToSide",
-				"key": "ctrl+k v",
-				"mac": "cmd+k v",
-				"when": "editorLangId == gift"
-			}
-		],
-		"configuration": {
-			"type": "object",
-			"title": "Gift",
-			"order": 20,
-			"properties": {
-				"gift.preview.scrollPreviewWithEditor": {
-					"type": "boolean",
-					"default": true,
-					"description": "%gift.preview.scrollPreviewWithEditor.desc%",
-					"scope": "resource"
-				},
-				"gift.preview.markEditorSelection": {
-					"type": "boolean",
-					"default": true,
-					"description": "%gift.preview.markEditorSelection.desc%",
-					"scope": "resource"
-				},
-				"gift.preview.scrollEditorWithPreview": {
-					"type": "boolean",
-					"default": true,
-					"description": "%gift.preview.scrollEditorWithPreview.desc%",
-					"scope": "resource"
-				},
-				"gift.preview.doubleClickToSwitchToEditor": {
-					"type": "boolean",
-					"default": true,
-					"description": "%gift.preview.doubleClickToSwitchToEditor.desc%",
-					"scope": "resource"
-				},
-				"gift.trace": {
-					"type": "string",
-					"enum": [
-						"off",
-						"verbose"
-					],
-					"default": "verbose",
-					"description": "%gift.trace.desc%",
-					"scope": "window"
-				}
-			}
-		}
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "npm run build-ext && npm run build-preview",
-		"build-ext": "npx tsc -p ./tsconfig.json",
-		"build-preview": "./node_modules/.bin/webpack-cli",
-		"watch": "npx tsc -watch -p ./tsconfig.json",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "npm run compile && node ./node_modules/vscode/bin/test",
-		"preversion": "npm run compile",
-		"version": "./node_modules/.bin/changes",
-		"postversion": "git push --follow-tags"
-	},
-	"dependencies": {
-		"deep-diff": "^1.0.2",
-		"eol": "^0.9.1",
-		"lodash.throttle": "4.1.1",
-		"marked": "^0.8.0",
-		"morphdom": "^2.5.12",
-		"vscode-nls": "3.2.4"
-	},
-	"devDependencies": {
-		"@studio/changes": "1.7.0",
-		"@types/lodash.throttle": "^4.1.4",
-		"@types/mocha": "2.2.42",
-		"@types/node": "10.9.4",
-		"ts-loader": "4.0.1",
-		"tslib": "^1.9.3",
-		"tslint": "5.8.0",
-		"typescript": "3.0.3",
-		"vscode": "^1.1.36",
-		"webpack": "^4.41.5",
-		"webpack-cli": "3.1.0"
-	}
+  "name": "vscode-gift-preview",
+  "displayName": "GIFT Language Preview",
+  "description": "%description%",
+  "version": "0.0.7",
+  "publisher": "ethan-ou",
+  "author": "Ethan Ou",
+  "license": "MIT",
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ethan-ou/vscode-gift-preview"
+  },
+  "main": "./out/extension.js",
+  "engines": {
+    "vscode": "^1.31.0"
+  },
+  "keywords": [
+    "gift",
+    "moodle"
+  ],
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:gift",
+    "onCommand:gift.preview.toggleLock",
+    "onCommand:gift.preview.refresh",
+    "onCommand:gift.showPreview",
+    "onCommand:gift.showPreviewToSide",
+    "onCommand:gift.showLockedPreviewToSide",
+    "onCommand:gift.showSource",
+    "onCommand:gift.showPreviewSecuritySelector",
+    "onWebviewPanel:gift.preview"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "gift.showPreview",
+        "title": "%gift.preview.title%",
+        "category": "Gift",
+        "icon": {
+          "light": "./media/Preview.svg",
+          "dark": "./media/Preview_inverse.svg"
+        }
+      },
+      {
+        "command": "gift.showPreviewToSide",
+        "title": "%gift.previewSide.title%",
+        "category": "Gift",
+        "icon": {
+          "light": "./media/PreviewOnRightPane_16x.svg",
+          "dark": "./media/PreviewOnRightPane_16x_dark.svg"
+        }
+      },
+      {
+        "command": "gift.showLockedPreviewToSide",
+        "title": "%gift.showLockedPreviewToSide.title%",
+        "category": "Gift",
+        "icon": {
+          "light": "./media/PreviewOnRightPane_16x.svg",
+          "dark": "./media/PreviewOnRightPane_16x_dark.svg"
+        }
+      },
+      {
+        "command": "gift.showSource",
+        "title": "%gift.showSource.title%",
+        "category": "Gift",
+        "icon": {
+          "light": "./media/ViewSource.svg",
+          "dark": "./media/ViewSource_inverse.svg"
+        }
+      },
+      {
+        "command": "gift.showPreviewSecuritySelector",
+        "title": "%gift.showPreviewSecuritySelector.title%",
+        "category": "Gift"
+      },
+      {
+        "command": "gift.preview.refresh",
+        "title": "%gift.preview.refresh.title%",
+        "category": "Gift"
+      },
+      {
+        "command": "gift.preview.toggleLock",
+        "title": "%gift.preview.toggleLock.title%",
+        "category": "Gift"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "gift.showPreviewToSide",
+          "when": "editorLangId == gift",
+          "alt": "gift.showPreview",
+          "group": "navigation"
+        },
+        {
+          "command": "gift.showSource",
+          "when": "giftPreviewFocus",
+          "group": "navigation"
+        },
+        {
+          "command": "gift.preview.refresh",
+          "when": "giftPreviewFocus",
+          "group": "1_gift"
+        },
+        {
+          "command": "gift.preview.toggleLock",
+          "when": "giftPreviewFocus",
+          "group": "1_gift"
+        },
+        {
+          "command": "gift.showPreviewSecuritySelector",
+          "when": "giftPreviewFocus",
+          "group": "1_gift"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "gift.showPreviewToSide",
+          "when": "editorLangId == gift",
+          "alt": "gift.showPreview",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "gift.showPreviewToSide",
+          "when": "editorLangId == gift",
+          "alt": "gift.showPreview",
+          "group": "navigation"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "gift.showPreviewToSide",
+          "when": "editorLangId == gift",
+          "alt": "gift.showPreview",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "gift.showPreview",
+          "when": "editorLangId == gift",
+          "group": "navigation"
+        },
+        {
+          "command": "gift.showPreviewToSide",
+          "when": "editorLangId == gift",
+          "group": "navigation"
+        },
+        {
+          "command": "gift.showLockedPreviewToSide",
+          "when": "editorLangId == gift",
+          "group": "navigation"
+        },
+        {
+          "command": "gift.showSource",
+          "when": "giftPreviewFocus",
+          "group": "navigation"
+        },
+        {
+          "command": "gift.showPreviewSecuritySelector",
+          "when": "editorLangId == gift"
+        },
+        {
+          "command": "gift.showPreviewSecuritySelector",
+          "when": "giftPreviewFocus"
+        },
+        {
+          "command": "gift.preview.toggleLock",
+          "when": "giftPreviewFocus"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "gift.showPreview",
+        "key": "shift+ctrl+v",
+        "mac": "shift+cmd+v",
+        "when": "editorLangId == gift"
+      },
+      {
+        "command": "gift.showPreviewToSide",
+        "key": "ctrl+k v",
+        "mac": "cmd+k v",
+        "when": "editorLangId == gift"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Gift",
+      "order": 20,
+      "properties": {
+        "gift.preview.scrollPreviewWithEditor": {
+          "type": "boolean",
+          "default": true,
+          "description": "%gift.preview.scrollPreviewWithEditor.desc%",
+          "scope": "resource"
+        },
+        "gift.preview.markEditorSelection": {
+          "type": "boolean",
+          "default": true,
+          "description": "%gift.preview.markEditorSelection.desc%",
+          "scope": "resource"
+        },
+        "gift.preview.scrollEditorWithPreview": {
+          "type": "boolean",
+          "default": true,
+          "description": "%gift.preview.scrollEditorWithPreview.desc%",
+          "scope": "resource"
+        },
+        "gift.preview.doubleClickToSwitchToEditor": {
+          "type": "boolean",
+          "default": true,
+          "description": "%gift.preview.doubleClickToSwitchToEditor.desc%",
+          "scope": "resource"
+        },
+        "gift.trace": {
+          "type": "string",
+          "enum": [
+            "off",
+            "verbose"
+          ],
+          "default": "verbose",
+          "description": "%gift.trace.desc%",
+          "scope": "window"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "npm run build-ext && npm run build-preview",
+    "build-ext": "tsc -p ./tsconfig.json",
+    "build-preview": "webpack --config webpack.config.js",
+    "watch": "tsc -watch -p ./tsconfig.json"
+  },
+  "dependencies": {
+    "deep-diff": "^1.0.2",
+    "eol": "^0.9.1",
+    "lodash.throttle": "4.1.1",
+    "marked": "^1.1.1",
+    "mathjax": "^3.0.5",
+    "morphdom": "^2.6.1",
+    "nanoid": "^3.1.12",
+    "vscode-nls": "4.1.2"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.31.0",
+    "@types/lodash.throttle": "^4.1.6",
+    "@types/mocha": "8.0.1",
+    "@types/node": "14.0.27",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
+    "eslint": "^7.6.0",
+    "ts-loader": "8.0.2",
+    "typescript": "3.9.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
 }

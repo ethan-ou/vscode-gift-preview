@@ -1,5 +1,5 @@
 import marked from "marked";
-import crypto from "crypto";
+import { nanoid } from "nanoid";
 
 interface Text {
   format: TextFormat;
@@ -10,7 +10,7 @@ enum TextFormat {
   moodle = "moodle",
   plain = "plain",
   html = "html",
-  markdown = "markdown"
+  markdown = "markdown",
 }
 
 export default function giftPreviewHTML(questions: any[]): string {
@@ -79,7 +79,7 @@ function sortQuestionType(q: any): string {
           {
             isTrue: q.isTrue,
             correctFeedback: q.correctFeedback,
-            incorrectFeedback: q.incorrectFeedback
+            incorrectFeedback: q.incorrectFeedback,
           },
           q.type
         )}
@@ -117,7 +117,7 @@ function makeTitle(type: string, title: string): string {
 function formatAnswers(choices: any, type: string): string {
   let result = ``;
 
-  const hash = crypto.randomBytes(10).toString("hex");
+  const hash = `id${nanoid(6)}`;
 
   if (type === "MC") {
     const multipleAnswer = checkMultipleAnswer(choices);
@@ -181,7 +181,7 @@ function formatAnswers(choices: any, type: string): string {
 
   if (type === "Numerical") {
     if (Array.isArray(choices)) {
-      const choiceText = choices.map(choice => numericalAnswer(choice.text));
+      const choiceText = choices.map((choice) => numericalAnswer(choice.text));
       return `
         <div>
           Answer: <input type="text" placeholder="${choiceText.join(", ")}">
@@ -200,14 +200,16 @@ function formatAnswers(choices: any, type: string): string {
     //Filters the answers for duplicates before creating drop-down options
     const answers = choices
       .map((item: any) => item.subanswer)
-      .filter((item: any, index: number, arr: any[]) => arr.indexOf(item) === index)
+      .filter(
+        (item: any, index: number, arr: any[]) => arr.indexOf(item) === index
+      )
       .reduce(
-      (sum: string, match: any) =>
-        (sum += `
+        (sum: string, match: any) =>
+          (sum += `
       <option>${match}</option>
       `),
-      ""
-    );
+        ""
+      );
 
     return `
       <table>
@@ -260,15 +262,15 @@ function createTrueFalse(choices: any) {
       isCorrect: choices.isTrue,
       feedback: choices.isTrue
         ? choices.correctFeedback
-        : choices.incorrectFeedback
+        : choices.incorrectFeedback,
     },
     {
       text: "False",
       isCorrect: !choices.isTrue,
       feedback: !choices.isTrue
         ? choices.correctFeedback
-        : choices.incorrectFeedback
-    }
+        : choices.incorrectFeedback,
+    },
   ];
 }
 
