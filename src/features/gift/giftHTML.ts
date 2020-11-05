@@ -295,7 +295,7 @@ function formatText(giftText: Text): string {
 
   switch (format) {
     case "moodle":
-      return formatText.replace(/(?:\r\n|\r|\n)/g, '<br>');
+      return formatText.replace(/(?:\r\n|\r|\n)/g, "<br>");
     case "plain":
       return formatText;
     case "html":
