@@ -125,7 +125,7 @@ function formatAnswers(choices: any, type: string): string {
 
     result += `Select one${multipleAnswer ? " or more" : ""}:`;
 
-    for (let choice of choices) {
+    for (const choice of choices) {
       const positiveWeight = choice.weight > 0 ? true : false;
       const correctOption = multipleAnswer ? positiveWeight : choice.isCorrect;
       const displayWeight = choice.weight

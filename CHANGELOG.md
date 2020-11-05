@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## 0.0.10 (5-11-2020)
+
+- Hotfix: Line breaks now functional.
+
 ## 0.0.9 (5-11-2020)
 
 - Added line break preview for Markdown and Moodle formatted questions.
