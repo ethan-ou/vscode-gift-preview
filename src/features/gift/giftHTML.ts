@@ -20,7 +20,7 @@ export default function giftPreviewHTML(questions: any[]): string {
   }
 
   let result = ``;
-  for (let question of questions) {
+  for (const question of questions) {
     if (question.type === "Category") {
       result += `<section class="category">${sortQuestionType(
         question
@@ -152,7 +152,7 @@ function formatAnswers(choices: any, type: string): string {
   }
 
   if (type === "Short") {
-    let choiceText = choices.map((choice: any) => formatText(choice.text));
+    const choiceText = choices.map((choice: any) => formatText(choice.text));
     return `
       <div>
         Answer: <input type="text" placeholder="${choiceText.join(", ")}">
@@ -165,7 +165,7 @@ function formatAnswers(choices: any, type: string): string {
 
     result += `Select one:`;
 
-    for (let choice of choicesTrueFalse) {
+    for (const choice of choicesTrueFalse) {
       result += `
       <div class="custom-input">
         <label>
@@ -295,14 +295,15 @@ function formatText(giftText: Text): string {
 
   switch (format) {
     case "moodle":
-      return formatText.replace(/(?:\r\n|\r|\n)/g, "<br>");
+      return formatText.replace(/(?:\\r\\n|\\r|\\n)/g, "<br>");
     case "plain":
       return formatText;
     case "html":
       return formatText.trim().replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
     case "markdown":
-      return marked(formatText, { breaks: true })
+      return marked(formatText)
         .trim()
+        .replace(/(?:\\r\\n|\\r|\\n)/g, "<br>")
         .replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
     default:
       return ``;
