@@ -295,12 +295,13 @@ function formatText(giftText: Text): string {
 
   switch (format) {
     case "moodle":
+      return formatText.replace(/(?:\r\n|\r|\n)/g, '<br>');
     case "plain":
       return formatText;
     case "html":
       return formatText.trim().replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
     case "markdown":
-      return marked(formatText)
+      return marked(formatText, { breaks: true })
         .trim()
         .replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
     default:
