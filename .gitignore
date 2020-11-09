@@ -4,3 +4,5 @@ node_modules
 .vscode/symbols.json
 npm-debug.log
 .vscode-test/
+media/index.js
+media/pre.js
