@@ -11,9 +11,9 @@ export default function createSnippetPreview(): string {
 const snippets = `
 <div>
   <h1 id="gift-format">GIFT Format</h1>
-  <p><strong>Docs:</strong> <a href="https://ethan-ou.github.io/vscode-gift-docs/docs/questions/">VSCode GIFT Docs</a>, <a href="https://docs.moodle.org/39/en/GIFT_format">Moodle Docs</a></p>
+  <p><strong>Docs:</strong> <a href="https://ethan-ou.github.io/vscode-gift-docs/docs/introduction/">VSCode GIFT Docs</a>, <a href="https://docs.moodle.org/39/en/GIFT_format">Moodle Docs</a></p>
   <h2 id="snippets">Snippets</h2>
-  <p>Type either a Plain-English or Shorthand snippet into your editor and press <kbd>Enter<kbd>.</p>
+  <p>Type either a Plain-English or Shorthand snippet into your editor and press <kbd>Enter</kbd>.</p>
   <table>
     <thead>
       <tr>
@@ -74,7 +74,7 @@ const snippets = `
   </table>
   <br>
   <h2 id="title-variants">Title Variants</h2>
-  <p>All question types also include snippets with titles:</p>
+  <p>Use these snippets for questions with titles:</p>
   <table>
     <thead>
       <tr>
