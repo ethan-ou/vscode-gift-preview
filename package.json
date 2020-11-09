@@ -1,11 +1,12 @@
 {
   "name": "vscode-gift-preview",
-  "displayName": "GIFT Language Preview",
+  "displayName": "GIFT Format Preview",
   "description": "%description%",
   "version": "0.0.10",
   "publisher": "ethan-ou",
   "author": "Ethan Ou",
   "license": "MIT",
+  "icon": "resources/icon.png",
   "readme": "README.md",
   "repository": {
     "type": "git",
