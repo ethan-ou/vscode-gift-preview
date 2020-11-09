@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## 0.0.11 (9-11-2020)
+
+- Rename extension from GIFT Language Preview to GIFT Format Preview
+- Documentation and snippet preview updated
+
 ## 0.0.10 (5-11-2020)
 
 - Hotfix: Line breaks now functional.

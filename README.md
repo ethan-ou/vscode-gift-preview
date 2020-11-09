@@ -5,7 +5,7 @@
 [![Downloads](https://vsmarketplacebadge.apphb.com/downloads/ethan-ou.vscode-gift-preview.svg)](https://vsmarketplacebadge.apphb.com/downloads-short/ethan-ou.vscode-gift-preview.svg)
 [![Ratings](https://vsmarketplacebadge.apphb.com/rating-short/ethan-ou.vscode-gift-preview.svg)](https://vsmarketplacebadge.apphb.com/rating-short/ethan-ou.vscode-gift-preview.svg)
 
-> **Note:** This extension requires the [GIFT Format Extension](https://github.com/ethan-ou/vscode-gift). We recommend installing the [GIFT Format Pack]() which bundles both this extension and language support for the GIFT Format.
+> **Note:** This extension requires the [GIFT Format Extension](https://github.com/ethan-ou/vscode-gift). We recommend installing the [GIFT Format Pack](https://github.com/ethan-ou/vscode-gift-pack) which bundles both this extension and language support for the GIFT Format.
 
 This extension provides a live preview for Moodle's GIFT format. Using this extension, you can write questions in GIFT while viewing the result in a modified version of Moodle's default theme.
 
@@ -15,9 +15,9 @@ See also: [GIFT Format Pack](https://github.com/ethan-ou/vscode-gift-pack), [GIF
 
 ## Table of Contents
 
-* [Getting Started](#getting-started)
-* [Installation](#installation)
-* [Using the Plugin](#using-the-plugin)
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Using the Plugin](#using-the-plugin)
 
 ## Getting Started
 
@@ -43,7 +43,7 @@ To install the GIFT Language Pack:
 3. When prompted, allow your browser to open Visual Studio Code.
 4. The extension should now be installing in your editor.
 
-## Using the Plugin 
+## Using the Plugin
 
 After installing, open a GIFT file or switch VSCode to the GIFT format. Then, right click and select `Open Preview to the Side`. Alternatively, press `CTRL + K` followed by `M` on your keyboard.
 
