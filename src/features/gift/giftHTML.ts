@@ -1,6 +1,7 @@
 import marked from "marked";
 import { nanoid } from "nanoid";
 import katex from "katex";
+import "katex/dist/contrib/mhchem.js";
 
 interface Text {
   format: TextFormat;
