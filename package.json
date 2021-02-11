@@ -244,7 +244,7 @@
     "eol": "^0.9.1",
     "katex": "^0.12.0",
     "lodash.throttle": "4.1.1",
-    "marked": "^1.1.1",
+    "marked": "^2.0.0",
     "morphdom": "^2.6.1",
     "nanoid": "^3.1.12",
     "vscode-nls": "4.1.2"
