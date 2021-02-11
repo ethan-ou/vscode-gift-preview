@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## 0.0.12 (12-02-2021)
+
+- Added mhchem to allow basic chemical equations in LaTeX. Partially resolves [vscode-gift-pack/#1](https://github.com/ethan-ou/vscode-gift-pack/issues/1).
+
 ## 0.0.11 (9-11-2020)
 
 - Rename extension from GIFT Language Preview to GIFT Format Preview
