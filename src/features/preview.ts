@@ -3,8 +3,23 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as vscode from "vscode";
-import * as path from "path";
+import {
+  Uri,
+  WebviewPanel,
+  Disposable,
+  ViewColumn,
+  window,
+  commands,
+  workspace,
+  EventEmitter,
+  WebviewPanelOnDidChangeViewStateEvent,
+  Range,
+  WebviewOptions,
+  TextEditorRevealType,
+  Position,
+  Selection,
+} from "vscode";
+import path from "path";
 
 import { Logger } from "../logger";
 import { GIFTContentProvider } from "./previewContentProvider";
@@ -18,33 +33,34 @@ import {
 import { GIFTPreviewConfigurationManager } from "./previewConfig";
 import { isGIFTFile } from "../util/file";
 import { getExtensionPath } from "../extension";
+
 const localize = nls.loadMessageBundle();
 
 export class GIFTPreview {
   public static viewType = "gift.preview";
 
-  private _resource: vscode.Uri;
+  private _resource: Uri;
   private _locked: boolean;
 
-  private readonly editor: vscode.WebviewPanel;
+  private readonly editor: WebviewPanel;
   private throttleTimer: any;
   private line: number | undefined = undefined;
-  private readonly disposables: vscode.Disposable[] = [];
+  private readonly disposables: Disposable[] = [];
   private firstUpdate = true;
-  private currentVersion?: { resource: vscode.Uri; version: number };
+  private currentVersion?: { resource: Uri; version: number };
   private forceUpdate = false;
   private isScrolling = false;
-  private _disposed: boolean = false;
+  private _disposed = false;
 
   public static async revive(
-    webview: vscode.WebviewPanel,
-    state: any,
+    webview: WebviewPanel,
+    state: { resource: string; locked: boolean; line: number },
     contentProvider: GIFTContentProvider,
     previewConfigurations: GIFTPreviewConfigurationManager,
     logger: Logger,
     topmostLineMonitor: GIFTFileTopmostLineMonitor
   ): Promise<GIFTPreview> {
-    const resource = vscode.Uri.parse(state.resource);
+    const resource = Uri.parse(state.resource);
     const locked = state.locked;
     const line = state.line;
 
@@ -68,15 +84,15 @@ export class GIFTPreview {
   }
 
   public static create(
-    resource: vscode.Uri,
-    previewColumn: vscode.ViewColumn,
+    resource: Uri,
+    previewColumn: ViewColumn,
     locked: boolean,
     contentProvider: GIFTContentProvider,
     previewConfigurations: GIFTPreviewConfigurationManager,
     logger: Logger,
     topmostLineMonitor: GIFTFileTopmostLineMonitor
   ): GIFTPreview {
-    const webview = vscode.window.createWebviewPanel(
+    const webview = window.createWebviewPanel(
       GIFTPreview.viewType,
       GIFTPreview.getPreviewTitle(resource, locked),
       previewColumn,
@@ -98,8 +114,8 @@ export class GIFTPreview {
   }
 
   private constructor(
-    webview: vscode.WebviewPanel,
-    resource: vscode.Uri,
+    webview: WebviewPanel,
+    resource: Uri,
     locked: boolean,
     private readonly _contentProvider: GIFTContentProvider,
     private readonly _previewConfigurations: GIFTPreviewConfigurationManager,
@@ -134,7 +150,7 @@ export class GIFTPreview {
 
         switch (e.type) {
           case "command":
-            vscode.commands.executeCommand(e.body.command, ...e.body.args);
+            commands.executeCommand(e.body.command, ...e.body.args);
             break;
 
           case "revealLine":
@@ -150,7 +166,7 @@ export class GIFTPreview {
       this.disposables
     );
 
-    vscode.workspace.onDidChangeTextDocument(
+    workspace.onDidChangeTextDocument(
       (event) => {
         if (this.isPreviewOf(event.document.uri)) {
           this.refresh();
@@ -170,7 +186,7 @@ export class GIFTPreview {
       this.disposables
     );
 
-    vscode.window.onDidChangeTextEditorSelection(
+    window.onDidChangeTextEditorSelection(
       (event) => {
         if (this.isPreviewOf(event.textEditor.document.uri)) {
           this.postMessage({
@@ -184,7 +200,7 @@ export class GIFTPreview {
       this.disposables
     );
 
-    vscode.window.onDidChangeActiveTextEditor(
+    window.onDidChangeActiveTextEditor(
       (editor) => {
         if (editor && isGIFTFile(editor.document) && !this._locked) {
           this.update(editor.document.uri);
@@ -195,20 +211,23 @@ export class GIFTPreview {
     );
   }
 
-  private readonly _onDisposeEmitter = new vscode.EventEmitter<void>();
+  private readonly _onDisposeEmitter = new EventEmitter<void>();
   public readonly onDispose = this._onDisposeEmitter.event;
 
-  private readonly _onDidChangeViewStateEmitter = new vscode.EventEmitter<
-    vscode.WebviewPanelOnDidChangeViewStateEvent
-  >();
-  public readonly onDidChangeViewState = this._onDidChangeViewStateEmitter
-    .event;
+  private readonly _onDidChangeViewStateEmitter =
+    new EventEmitter<WebviewPanelOnDidChangeViewStateEvent>();
+  public readonly onDidChangeViewState =
+    this._onDidChangeViewStateEmitter.event;
 
-  public get resource(): vscode.Uri {
+  public get resource(): Uri {
     return this._resource;
   }
 
-  public get state() {
+  public get state(): {
+    resource: string;
+    locked: boolean;
+    line: number | undefined;
+  } {
     return {
       resource: this.resource.toString(),
       locked: this._locked,
@@ -216,7 +235,7 @@ export class GIFTPreview {
     };
   }
 
-  public dispose() {
+  public dispose(): void {
     if (this._disposed) {
       return;
     }
@@ -231,8 +250,8 @@ export class GIFTPreview {
     disposeAll(this.disposables);
   }
 
-  public update(resource: vscode.Uri) {
-    const editor = vscode.window.activeTextEditor;
+  public update(resource: Uri): void {
+    const editor = window.activeTextEditor;
     if (editor && editor.document.uri.fsPath === resource.fsPath) {
       this.line = getVisibleLine(editor);
     }
@@ -259,23 +278,23 @@ export class GIFTPreview {
     this.firstUpdate = false;
   }
 
-  public refresh() {
+  public refresh(): void {
     this.update(this._resource);
   }
 
-  public updateConfiguration() {
+  public updateConfiguration(): void {
     if (this._previewConfigurations.hasConfigurationChanged(this._resource)) {
       this.refresh();
     }
   }
 
-  public get position(): vscode.ViewColumn | undefined {
+  public get position(): ViewColumn | undefined {
     return this.editor.viewColumn;
   }
 
   public matchesResource(
-    otherResource: vscode.Uri,
-    otherPosition: vscode.ViewColumn | undefined,
+    otherResource: Uri,
+    otherPosition: ViewColumn | undefined,
     otherLocked: boolean
   ): boolean {
     if (this.position !== otherPosition) {
@@ -297,11 +316,11 @@ export class GIFTPreview {
     );
   }
 
-  public reveal(viewColumn: vscode.ViewColumn) {
+  public reveal(viewColumn: ViewColumn): void {
     this.editor.reveal(viewColumn);
   }
 
-  public toggleLock() {
+  public toggleLock(): void {
     this._locked = !this._locked;
     this.editor.title = GIFTPreview.getPreviewTitle(
       this._resource,
@@ -312,19 +331,16 @@ export class GIFTPreview {
   private get iconPath() {
     const root = path.join(getExtensionPath(), "media");
     return {
-      light: vscode.Uri.file(path.join(root, "Preview.svg")),
-      dark: vscode.Uri.file(path.join(root, "Preview_inverse.svg")),
+      light: Uri.file(path.join(root, "Preview.svg")),
+      dark: Uri.file(path.join(root, "Preview_inverse.svg")),
     };
   }
 
-  private isPreviewOf(resource: vscode.Uri): boolean {
+  private isPreviewOf(resource: Uri): boolean {
     return this._resource.fsPath === resource.fsPath;
   }
 
-  private static getPreviewTitle(
-    resource: vscode.Uri,
-    locked: boolean
-  ): string {
+  private static getPreviewTitle(resource: Uri, locked: boolean): string {
     return locked
       ? localize(
           "lockedPreviewTitle",
@@ -334,7 +350,7 @@ export class GIFTPreview {
       : localize("previewTitle", "Preview {0}", path.basename(resource.fsPath));
   }
 
-  private updateForView(resource: vscode.Uri, topLine: number | undefined) {
+  private updateForView(resource: Uri, topLine: number | undefined) {
     if (!this.isPreviewOf(resource)) {
       return;
     }
@@ -367,7 +383,7 @@ export class GIFTPreview {
     clearTimeout(this.throttleTimer);
     this.throttleTimer = undefined;
 
-    const document = await vscode.workspace.openTextDocument(resource);
+    const document = await workspace.openTextDocument(resource);
     if (
       !this.forceUpdate &&
       this.currentVersion &&
@@ -409,9 +425,7 @@ export class GIFTPreview {
     this.forceUpdate = false;
   }
 
-  private static getWebviewOptions(
-    resource: vscode.Uri
-  ): vscode.WebviewOptions {
+  private static getWebviewOptions(resource: Uri): WebviewOptions {
     return {
       enableScripts: true,
       enableCommandUris: true,
@@ -419,18 +433,16 @@ export class GIFTPreview {
     };
   }
 
-  private static getLocalResourceRoots(resource: vscode.Uri): vscode.Uri[] {
-    const baseRoots: vscode.Uri[] = [
-      vscode.Uri.file(getExtensionPath() + "/media"),
-    ];
+  private static getLocalResourceRoots(resource: Uri): Uri[] {
+    const baseRoots: Uri[] = [Uri.file(getExtensionPath() + "/media")];
 
-    const folder = vscode.workspace.getWorkspaceFolder(resource);
+    const folder = workspace.getWorkspaceFolder(resource);
     if (folder) {
       return baseRoots.concat(folder.uri);
     }
 
     if (!resource.scheme || resource.scheme === "file") {
-      return baseRoots.concat(vscode.Uri.file(path.dirname(resource.fsPath)));
+      return baseRoots.concat(Uri.file(path.dirname(resource.fsPath)));
     }
 
     return baseRoots;
@@ -438,7 +450,7 @@ export class GIFTPreview {
 
   private onDidScrollPreview(line: number) {
     this.line = line;
-    for (const editor of vscode.window.visibleTextEditors) {
+    for (const editor of window.visibleTextEditors) {
       if (!this.isPreviewOf(editor.document.uri)) {
         continue;
       }
@@ -449,33 +461,31 @@ export class GIFTPreview {
       const text = editor.document.lineAt(sourceLine).text;
       const start = Math.floor(fraction * text.length);
       editor.revealRange(
-        new vscode.Range(sourceLine, start, sourceLine + 1, 0),
-        vscode.TextEditorRevealType.AtTop
+        new Range(sourceLine, start, sourceLine + 1, 0),
+        TextEditorRevealType.AtTop
       );
     }
   }
 
   private async onDidClickPreview(line: number): Promise<void> {
-    for (const visibleEditor of vscode.window.visibleTextEditors) {
+    for (const visibleEditor of window.visibleTextEditors) {
       if (this.isPreviewOf(visibleEditor.document.uri)) {
-        const editor = await vscode.window.showTextDocument(
+        const editor = await window.showTextDocument(
           visibleEditor.document,
           visibleEditor.viewColumn
         );
-        const position = new vscode.Position(line, 0);
-        editor.selection = new vscode.Selection(position, position);
+        const position = new Position(line, 0);
+        editor.selection = new Selection(position, position);
         return;
       }
     }
 
-    vscode.workspace
-      .openTextDocument(this._resource)
-      .then(vscode.window.showTextDocument);
+    workspace.openTextDocument(this._resource).then(window.showTextDocument);
   }
 }
 
 export interface PreviewSettings {
-  readonly resourceColumn: vscode.ViewColumn;
-  readonly previewColumn: vscode.ViewColumn;
+  readonly resourceColumn: ViewColumn;
+  readonly previewColumn: ViewColumn;
   readonly locked: boolean;
 }

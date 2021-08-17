@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as vscode from "vscode";
 import * as path from "path";
 
 import * as nls from "vscode-nls";
@@ -21,6 +20,7 @@ import {
 import GIFTParser from "./gift";
 import createSnippetPreview from "./snippets";
 import { actionButton } from "./ui";
+import { ExtensionContext, TextDocument, Uri, workspace } from "vscode";
 
 /**
  * Strings used inside the gift preview.
@@ -46,10 +46,10 @@ const previewStrings = {
 };
 
 export class GIFTContentProvider {
-  private GIFTParser: any;
+  private GIFTParser: GIFTParser;
 
   constructor(
-    private readonly context: vscode.ExtensionContext,
+    private readonly context: ExtensionContext,
     private readonly cspArbiter: ContentSecurityPolicyArbiter,
     private readonly logger: Logger
   ) {
@@ -57,11 +57,15 @@ export class GIFTContentProvider {
   }
 
   public provideTextDocumentContent(
-    giftDocument: vscode.TextDocument,
+    giftDocument: TextDocument,
     previewConfigurations: GIFTPreviewConfigurationManager,
     initialLine: number | undefined = undefined,
     state?: any
-  ) {
+  ): {
+    head: string;
+    body: string;
+    blankState: boolean;
+  } {
     const sourceUri = giftDocument.uri;
     const config = previewConfigurations.loadAndCacheConfiguration(sourceUri);
     const initialData = {
@@ -141,49 +145,42 @@ export class GIFTContentProvider {
   }
 
   private extensionResourcePath(mediaFile: string): string {
-    return vscode.Uri.file(
-      this.context.asAbsolutePath(path.join("media", mediaFile))
-    )
+    return Uri.file(this.context.asAbsolutePath(path.join("media", mediaFile)))
       .with({ scheme: "vscode-resource" })
       .toString();
   }
 
-  private fixHref(resource: vscode.Uri, href: string): string {
+  private fixHref(resource: Uri, href: string): string {
     if (!href) {
       return href;
     }
 
     // Use href if it is already an URL
-    const hrefUri = vscode.Uri.parse(href);
+    const hrefUri = Uri.parse(href);
     if (["http", "https"].indexOf(hrefUri.scheme) >= 0) {
       return hrefUri.toString();
     }
 
     // Use href as file URI if it is absolute
     if (path.isAbsolute(href) || hrefUri.scheme === "file") {
-      return vscode.Uri.file(href)
-        .with({ scheme: "vscode-resource" })
-        .toString();
+      return Uri.file(href).with({ scheme: "vscode-resource" }).toString();
     }
 
     // Use a workspace relative path if there is a workspace
-    let root = vscode.workspace.getWorkspaceFolder(resource);
+    const root = workspace.getWorkspaceFolder(resource);
     if (root) {
-      return vscode.Uri.file(path.join(root.uri.fsPath, href))
+      return Uri.file(path.join(root.uri.fsPath, href))
         .with({ scheme: "vscode-resource" })
         .toString();
     }
 
     // Otherwise look relative to the gift file
-    return vscode.Uri.file(path.join(path.dirname(resource.fsPath), href))
+    return Uri.file(path.join(path.dirname(resource.fsPath), href))
       .with({ scheme: "vscode-resource" })
       .toString();
   }
 
-  private getStyles(
-    resource: vscode.Uri,
-    config: GIFTPreviewConfiguration
-  ): string {
+  private getStyles(resource: Uri, config: GIFTPreviewConfiguration): string {
     if (Array.isArray(config.styles)) {
       return config.styles
         .map((style) => {
@@ -201,7 +198,7 @@ export class GIFTContentProvider {
     }
   }
 
-  private getCspForResource(resource: vscode.Uri, nonce: string): string {
+  private getCspForResource(resource: Uri, nonce: string): string {
     switch (this.cspArbiter.getSecurityLevelForResource(resource)) {
       case GIFTPreviewSecurityLevel.AllowInsecureContent:
         return `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: http: https: data:; media-src vscode-resource: http: https: data:; script-src https: vscode-resource:; style-src vscode-resource: 'unsafe-inline' http: https: data:; font-src vscode-resource: http: https: data:;">`;
