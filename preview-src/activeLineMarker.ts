@@ -5,31 +5,31 @@
 // import { getElementsForSourceLine } from './scroll-sync';
 
 export class ActiveLineMarker {
-	private _current: any;
+  private _current: HTMLElement | undefined;
 
-	onDidChangeTextEditorSelection(line: number) {
-		// Uncomment if active line class is needed
-		// const { previous } = getElementsForSourceLine(line);
-		// this._update(previous && previous.element);
-	}
+  onDidChangeTextEditorSelection(line: number): void {
+    // Uncomment if active line class is needed
+    // const { previous } = getElementsForSourceLine(line);
+    // this._update(previous && previous.element);
+  }
 
-	_update(before: HTMLElement | undefined) {
-		this._unmarkActiveElement(this._current);
-		this._markActiveElement(before);
-		this._current = before;
-	}
+  _update(before: HTMLElement | undefined): void {
+    this._unmarkActiveElement(this._current);
+    this._markActiveElement(before);
+    this._current = before;
+  }
 
-	_unmarkActiveElement(element: HTMLElement | undefined) {
-		if (!element) {
-			return;
-		}
-		element.className = element.className.replace(/\bcode-active-line\b/g, '');
-	}
+  _unmarkActiveElement(element: HTMLElement | undefined): void {
+    if (!element) {
+      return;
+    }
+    element.className = element.className.replace(/\bcode-active-line\b/g, "");
+  }
 
-	_markActiveElement(element: HTMLElement | undefined) {
-		if (!element) {
-			return;
-		}
-		element.className += ' code-active-line';
-	}
+  _markActiveElement(element: HTMLElement | undefined): void {
+    if (!element) {
+      return;
+    }
+    element.className += " code-active-line";
+  }
 }

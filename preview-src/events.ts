@@ -3,10 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-export function onceDocumentLoaded(f: () => void) {
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', f);
-	} else {
-		f();
-	}
+export function onceDocumentLoaded(f: () => void): void {
+  document.readyState === "loading"
+    ? document.addEventListener("DOMContentLoaded", f)
+    : f();
 }

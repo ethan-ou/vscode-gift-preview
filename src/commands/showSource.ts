@@ -3,22 +3,21 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as vscode from 'vscode';
-import { Command } from '../commandManager';
-import { GIFTPreviewManager } from '../features/previewManager';
+import { workspace, window, TextEditor } from "vscode";
+import { Command } from "../commandManager";
+import { GIFTPreviewManager } from "../features/previewManager";
 
 export class ShowSourceCommand implements Command {
-	public readonly id = 'gift.showSource';
+  public readonly id = "gift.showSource";
 
-	public constructor(
-		private readonly previewManager: GIFTPreviewManager
-	) { }
+  public constructor(private readonly previewManager: GIFTPreviewManager) {}
 
-	public execute() {
-		if (this.previewManager.activePreviewResource) {
-			return vscode.workspace.openTextDocument(this.previewManager.activePreviewResource)
-				.then(document => vscode.window.showTextDocument(document));
-		}
-		return undefined;
-	}
+  public execute(): Thenable<TextEditor> | undefined {
+    if (this.previewManager.activePreviewResource) {
+      return workspace
+        .openTextDocument(this.previewManager.activePreviewResource)
+        .then((document) => window.showTextDocument(document));
+    }
+    return undefined;
+  }
 }
