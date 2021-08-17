@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as vscode from 'vscode';
+import { TextDocument } from "vscode";
 
-export function isGIFTFile(document: vscode.TextDocument) {
-	return document.languageId === 'gift';
+export function isGIFTFile(document: TextDocument): boolean {
+  return document.languageId === "gift";
 }
