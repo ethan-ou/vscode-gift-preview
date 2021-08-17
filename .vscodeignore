@@ -12,3 +12,19 @@ tslint.json
 webpack.config.js
 .git/**
 .vscode-test/**
+
+**/*.gif
+**/*.eslintignore
+
+# Remove Preview folder since built through Webpack
+**/preview-src
+
+# May cause issues with dependencies:
+**/node_modules/**/examples/**
+**/node_modules/**/*.md
+**/node_modules/**/*.txt
+
+# Katex Font Removal
+**/node_modules/**/*.ttf
+**/node_modules/**/*.woff
+**/node_modules/**/*.woff2
