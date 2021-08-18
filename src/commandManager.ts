@@ -22,19 +22,14 @@ export class CommandManager {
   }
 
   public register<T extends Command>(command: T): T {
-    this.registerCommand(command.id, command.execute, command);
-    return command;
-  }
-
-  private registerCommand(
-    id: string,
-    impl: (...args: any[]) => void,
-    thisArg?: any
-  ) {
-    if (this.commands.has(id)) {
-      return;
+    if (this.commands.has(command.id)) {
+      return command;
     }
 
-    this.commands.set(id, commands.registerCommand(id, impl, thisArg));
+    this.commands.set(
+      command.id,
+      commands.registerCommand(command.id, command.execute, command)
+    );
+    return command;
   }
 }

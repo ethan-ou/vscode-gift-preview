@@ -12,6 +12,7 @@ import {
   workspace,
   Range,
   TextEditorRevealType,
+  Selection,
 } from "vscode";
 
 import { Command } from "../commandManager";
@@ -69,10 +70,9 @@ export class OpenDocumentLinkCommand implements Command {
       if (lineNumberFragment) {
         const line = +lineNumberFragment[1] - 1;
         if (!isNaN(line)) {
-          return editor.revealRange(
-            new Range(line, 0, line, 0),
-            TextEditorRevealType.AtTop
-          );
+          const lineStart = new Range(line, 0, line, 0);
+          editor.selection = new Selection(lineStart.start, lineStart.end);
+          return editor.revealRange(lineStart, TextEditorRevealType.AtTop);
         }
       }
     }
