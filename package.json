@@ -246,7 +246,7 @@
     "lodash.throttle": "4.1.1",
     "marked": "^3.0.0",
     "morphdom": "^2.6.1",
-    "nanoid": "^3.1.25",
+    "nanoid": "^3.1.31",
     "vscode-nls": "5.0.0"
   },
   "devDependencies": {
