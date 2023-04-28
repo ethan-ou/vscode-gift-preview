@@ -1,4 +1,4 @@
-import marked from "marked";
+import { marked } from "marked";
 import { nanoid } from "nanoid";
 import katex from "katex";
 import "katex/dist/contrib/mhchem.js";
@@ -302,7 +302,8 @@ function formatText(giftText: Text): string {
     case "html":
       return formatText.trim().replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
     case "markdown":
-      return marked(formatText)
+      return marked
+        .parse(formatText)
         .trim()
         .replace(/(?:\\r\\n|\\r|\\n)/g, "<br>")
         .replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
