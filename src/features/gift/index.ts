@@ -68,7 +68,7 @@ export default class GIFTParser {
     newLines: string[],
     finalText: string[]
   ): string[] {
-    const diffArray: any[] = diff(oldLines, newLines);
+    const diffArray: any[] = diff(oldLines, newLines) as any[];
     if (!diffArray) {
       return finalText;
     }

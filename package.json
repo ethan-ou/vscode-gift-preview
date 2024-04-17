@@ -2,7 +2,7 @@
   "name": "vscode-gift-preview",
   "displayName": "GIFT Format Preview",
   "description": "%description%",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "publisher": "ethan-ou",
   "author": "Ethan Ou",
   "license": "MIT",
@@ -14,7 +14,7 @@
   },
   "main": "./out/extension.js",
   "engines": {
-    "vscode": "^1.31.0"
+    "vscode": "^1.75.0"
   },
   "keywords": [
     "gift",
@@ -242,6 +242,7 @@
   "dependencies": {
     "deep-diff": "^1.0.2",
     "eol": "^0.9.1",
+    "gift-parser-ide": "^0.2.5",
     "katex": "^0.16.6",
     "lodash.throttle": "4.1.1",
     "marked": "^4.3.0",

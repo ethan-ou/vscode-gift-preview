@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## 0.0.13 (17-04-2024)
+
+- Upgrade GIFT Parser
+
 ## 0.0.12 (12-02-2021)
 
 - Added mhchem to allow basic chemical equations in LaTeX. Partially resolves [vscode-gift-pack/#1](https://github.com/ethan-ou/vscode-gift-pack/issues/1).
