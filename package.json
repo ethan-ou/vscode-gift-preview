@@ -2,7 +2,7 @@
   "name": "vscode-gift-preview",
   "displayName": "GIFT Format Preview",
   "description": "%description%",
-  "version": "0.0.13",
+  "version": "0.0.12",
   "publisher": "ethan-ou",
   "author": "Ethan Ou",
   "license": "MIT",
@@ -14,7 +14,7 @@
   },
   "main": "./out/extension.js",
   "engines": {
-    "vscode": "^1.75.0"
+    "vscode": "^1.31.0"
   },
   "keywords": [
     "gift",
@@ -242,20 +242,24 @@
   "dependencies": {
     "deep-diff": "^1.0.2",
     "eol": "^0.9.1",
-    "katex": "^0.16.10",
+    "katex": "^0.16.6",
     "lodash.throttle": "4.1.1",
-    "marked": "^12.0.1",
-    "morphdom": "^2.7.2",
-    "nanoid": "^5.0.7",
+    "marked": "^4.3.0",
+    "morphdom": "^2.7.0",
+    "nanoid": "^3.3.6",
     "vscode-nls": "5.2.0"
   },
   "devDependencies": {
-    "@types/lodash.throttle": "^4.1.9",
-    "@types/node": "20.12.7",
-    "@types/vscode": "^1.75.0",
-    "ts-loader": "9.5.1",
-    "typescript": "5.4.5",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4"
+    "@types/lodash.throttle": "^4.1.7",
+    "@types/marked": "4.0.8",
+    "@types/node": "14.0.27",
+    "@types/vscode": "^1.31.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/parser": "^4.29.2",
+    "eslint": "^7.32.0",
+    "ts-loader": "9.2.5",
+    "typescript": "4.3.5",
+    "webpack": "^5.50.0",
+    "webpack-cli": "^4.8.0"
   }
 }
