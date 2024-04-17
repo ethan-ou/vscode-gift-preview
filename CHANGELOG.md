@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## 0.0.14 (17-04-2024)
+
+- Hotfix: Undo change of vscode minimum version
+
 ## 0.0.13 (17-04-2024)
 
 - Upgrade GIFT Parser

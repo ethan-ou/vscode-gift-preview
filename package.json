@@ -2,7 +2,7 @@
   "name": "vscode-gift-preview",
   "displayName": "GIFT Format Preview",
   "description": "%description%",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "publisher": "ethan-ou",
   "author": "Ethan Ou",
   "license": "MIT",
@@ -14,7 +14,7 @@
   },
   "main": "./out/extension.js",
   "engines": {
-    "vscode": "^1.75.0"
+    "vscode": "^1.31.0"
   },
   "keywords": [
     "gift",
