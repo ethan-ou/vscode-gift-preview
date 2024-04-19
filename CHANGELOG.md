@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## 0.0.15 (19-04-2024)
+
+- Upgrade dependencies
+- Fix break on new lines
+
 ## 0.0.14 (17-04-2024)
 
 - Hotfix: Undo change of vscode minimum version

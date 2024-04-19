@@ -2,7 +2,7 @@
   "name": "vscode-gift-preview",
   "displayName": "GIFT Format Preview",
   "description": "%description%",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "publisher": "ethan-ou",
   "author": "Ethan Ou",
   "license": "MIT",
@@ -242,7 +242,7 @@
   "dependencies": {
     "deep-diff": "^1.0.2",
     "eol": "^0.9.1",
-    "gift-parser-ide": "^0.2.5",
+    "gift-parser-ide": "^0.2.6",
     "katex": "^0.16.6",
     "lodash.throttle": "4.1.1",
     "marked": "^4.3.0",

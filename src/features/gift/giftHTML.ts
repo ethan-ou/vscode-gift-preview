@@ -23,13 +23,9 @@ export default function giftPreviewHTML(questions: any[]): string {
   let result = ``;
   for (const question of questions) {
     if (question.type === "Category") {
-      result += `<section class="category">${sortQuestionType(
-        question
-      )}</section>`;
+      result += `<section class="category">${sortQuestionType(question)}</section>`;
     } else {
-      result += `<section class="moodle">${sortQuestionType(
-        question
-      )}</section>`;
+      result += `<section class="moodle">${sortQuestionType(question)}</section>`;
     }
   }
   return result;
@@ -103,11 +99,7 @@ function makeTitle(type: string, title: string): string {
   return `
     <div class="title">
       <span>
-        ${
-          title
-            ? title
-            : `<span class="moodle-blue-darker">Optional Title...</span>`
-        }
+        ${title ? title : `<span class="moodle-blue-darker">Optional Title...</span>`}
       </span>
       <span class="question-type">
         <span class="raised">${type}</span>
@@ -130,9 +122,7 @@ function formatAnswers(choices: any, type: string): string {
       const positiveWeight = choice.weight > 0 ? true : false;
       const correctOption = multipleAnswer ? positiveWeight : choice.isCorrect;
       const displayWeight = choice.weight
-        ? `<span class="weight ${correctOption ? `weight-correct` : ``}">${
-            choice.weight
-          }%</span>`
+        ? `<span class="weight ${correctOption ? `weight-correct` : ``}">${choice.weight}%</span>`
         : ``;
 
       result += `
@@ -202,9 +192,7 @@ function formatAnswers(choices: any, type: string): string {
     //Filters the answers for duplicates before creating drop-down options
     const answers = choices
       .map((item: any) => item.subanswer)
-      .filter(
-        (item: any, index: number, arr: any[]) => arr.indexOf(item) === index
-      )
+      .filter((item: any, index: number, arr: any[]) => arr.indexOf(item) === index)
       .reduce(
         (sum: string, match: any) =>
           (sum += `
@@ -245,10 +233,7 @@ function formatAnswers(choices: any, type: string): string {
 }
 
 function checkMultipleAnswer(choices: any[]): boolean {
-  const numberOfCorrect = choices.reduce(
-    (sum, current) => (current.isCorrect ? sum + 1 : sum),
-    0
-  );
+  const numberOfCorrect = choices.reduce((sum, current) => (current.isCorrect ? sum + 1 : sum), 0);
 
   return numberOfCorrect === 0 ? true : false;
 }
@@ -262,16 +247,12 @@ function createTrueFalse(choices: any) {
     {
       text: "True",
       isCorrect: choices.isTrue,
-      feedback: choices.isTrue
-        ? choices.correctFeedback
-        : choices.incorrectFeedback,
+      feedback: choices.isTrue ? choices.correctFeedback : choices.incorrectFeedback,
     },
     {
       text: "False",
       isCorrect: !choices.isTrue,
-      feedback: !choices.isTrue
-        ? choices.correctFeedback
-        : choices.incorrectFeedback,
+      feedback: !choices.isTrue ? choices.correctFeedback : choices.incorrectFeedback,
     },
   ];
 }
@@ -296,16 +277,19 @@ function formatText(giftText: Text): string {
 
   switch (format) {
     case "moodle":
-      return formatText.replace(/(?:\\r\\n|\\r|\\n)/g, "<br>");
+      return formatText.replace(/(?:\r\n|\r|\n)/g, "<br>");
     case "plain":
       return formatText;
     case "html":
-      return formatText.trim().replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
+      return formatText
+        .trim()
+        .replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2")
+        .replace(/(?:\r\n|\r|\n)/g, "<br>");
     case "markdown":
       return marked
         .parse(formatText)
         .trim()
-        .replace(/(?:\\r\\n|\\r|\\n)/g, "<br>")
+        .replace(/(?:\r\n|\r|\n)/g, "<br>")
         .replace(/(^<p>)(.*?)(<\/p>)$/gm, "$2");
     default:
       return ``;
@@ -314,21 +298,15 @@ function formatText(giftText: Text): string {
 
 function formatLatex(text: string) {
   return text
-    .replace(/\$\$(.*?)\$\$/g, (outer, inner) =>
-      katex.renderToString(inner, { displayMode: true })
-    )
-    .replace(/\\\[(.*?)\\\]/g, (outer, inner) =>
-      katex.renderToString(inner, { displayMode: true })
-    )
+    .replace(/\$\$(.*?)\$\$/g, (outer, inner) => katex.renderToString(inner, { displayMode: true }))
+    .replace(/\\\[(.*?)\\\]/g, (outer, inner) => katex.renderToString(inner, { displayMode: true }))
     .replace(/\\\((.*?)\\\)/g, (outer, inner) =>
       katex.renderToString(inner, { displayMode: false })
     );
 }
 
 function formatGeneralFeedback(feedback: Text): string {
-  return feedback !== null
-    ? `<div class="moodle-alt"><p>${formatText(feedback)}</p></div>`
-    : ``;
+  return feedback !== null ? `<div class="moodle-alt"><p>${formatText(feedback)}</p></div>` : ``;
 }
 
 function formatAnswerIcon(correct: boolean): string {

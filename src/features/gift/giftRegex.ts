@@ -27,10 +27,7 @@ function lineRegex(text: string): string {
   return text
     .split(/\r?\n/)
     .map((category) =>
-      category.replace(
-        /(^[ \\t]+)?(((^|\n)\s*[$]CATEGORY:))(.+)/g,
-        `<br><b>$5</b><br>`
-      )
+      category.replace(/(^[ \\t]+)?(((^|\n)\s*[$]CATEGORY:))(.+)/g, `<br><b>$5</b><br>`)
     )
     .map((title) => title.replace(/\s*(::)\s*(.*?)(::)/g, `<br><b>$2</b><br>`))
     .map((openBracket) => openBracket.replace(/([^\\]|^){([#])?/g, `$1<br>`))
